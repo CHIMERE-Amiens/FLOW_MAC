@@ -1,0 +1,29 @@
+/* XPM */
+static char *idl_prj_run[] = {
+/* columns rows colors chars-per-pixel */
+"16 16 7 1",
+"  s none m none c none",
+". s Gray80 m white c Gray80",
+"X s #c0c0c0 m black c #c0c0c0",
+"o s #b1b1b1 m black c #b1b1b1",
+"O s #808080 m black c #808080",
+"+ s Gray10 m black c Gray10",
+"@ s Gray0 m black c Gray0",
+/* pixels */
+"                ",
+"                ",
+"                ",
+"     ++         ",
+"     +.+        ",
+"     +X.+       ",
+"     +XX.+      ",
+"     +XXX.+     ",
+"     +XXXXo+    ",
+"     +XXXO@oo   ",
+"     +XXO@oo .  ",
+"     @XO@oo     ",
+"     +O@oo      ",
+"     +@oo       ",
+"      oo        ",
+"                "
+};

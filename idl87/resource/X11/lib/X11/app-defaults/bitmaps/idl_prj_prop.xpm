@@ -1,0 +1,36 @@
+/* XPM */
+static char *idl_prj_prop[] = {
+/* columns rows colors chars-per-pixel */
+"16 16 14 1",
+"  s #e911a1 m black c #e911a1",
+". s #ff66cc m black c #ff66cc",
+"X s #6a6af9 m black c #6a6af9",
+"o s #3c7491 m black c #3c7491",
+"O s #323c3c m black c #323c3c",
+"+ s #0e5d57 m black c #0e5d57",
+"@ s #06ff00 m black c #06ff00",
+"# s #eeeeee m white c #eeeeee",
+"$ s none m none c none",
+"% s #bbbbbb m white c #bbbbbb",
+"& s Gray48 m white c Gray48",
+"* s #444444 m black c #444444",
+"= s Gray10 m black c Gray10",
+"- s Gray0 m black c Gray0",
+/* pixels */
+"$$$$$$$$$$$$$$$$",
+"$$===========$$$",
+"$$=&&&&&&&&&=&$$",
+"$$===========&$$",
+"$$=########%=&$$",
+"$$=#@@O#==#%=&$$",
+"$$=#+o ####%=&$$",
+"$$=#XX.#==#%=&$$",
+"$$=########%=&$$",
+"$$=#======#%=&$$",
+"$$=########%=&$$",
+"$$=#======#%=&$$",
+"$$=########%-&$$",
+"$$===========&$$",
+"$$$***********$$",
+"$$$$$$$$$$$$$$$$"
+};

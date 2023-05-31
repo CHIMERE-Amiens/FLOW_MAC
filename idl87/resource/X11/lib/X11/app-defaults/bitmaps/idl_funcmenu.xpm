@@ -1,0 +1,20 @@
+/* XPM */
+static char * idl_funcmenu_xpm[] = {
+/* width height ncolors cpp [x_hot y_hot] */
+"14 12 2 1 0 0",
+/* colors */
+" 	s none	m none	c none",
+".	s blue	m black	c blue",
+/* pixels */
+"              ",
+"   .  .       ",
+"  .    .      ",
+" .      .     ",
+" .      .     ",
+" .      .     ",
+" .      .     ",
+" .      .     ",
+" .      .     ",
+"  .    . .....",
+"   .  .   ... ",
+"           .  "};

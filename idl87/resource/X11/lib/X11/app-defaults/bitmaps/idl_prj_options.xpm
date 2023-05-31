@@ -1,0 +1,32 @@
+/* XPM */
+static char *idl_prj_options[] = {
+/* columns rows colors chars-per-pixel */
+"16 16 10 1",
+"  s Gray100 m white c Gray100",
+". s #eeeeee m white c #eeeeee",
+"X s #dddddd m white c #dddddd",
+"o s none m none c none",
+"O s Gray80 m black c Gray80",
+"+ s #bbbbbb m black c #bbbbbb",
+"@ s Gray48 m white c Gray48",
+"# s #444444 m black c #444444",
+"$ s Gray10 m black c Gray10",
+"% s Gray0 m black c Gray0",
+/* pixels */
+"oooooooooooooooo",
+"oo$$$$$$$$$ooooo",
+"oo$......%$$oooo",
+"oo$......%X$$ooo",
+"oo$......%%%$ooo",
+"oo$.......++$ooo",
+"oo$.O%O....+$ooo",
+"oo$.%%%O%%.+$ooo",
+"oo$.O%O....+$ooo",
+"oo$........+$ooo",
+"oo$.O%O....+$ooo",
+"oo$.% %O%%.+$ooo",
+"oo$.O%O....+$@@o",
+"oo$........+%#@@",
+"oo$$$$$$$$$$$@@o",
+"oooooooooooooooo"
+};

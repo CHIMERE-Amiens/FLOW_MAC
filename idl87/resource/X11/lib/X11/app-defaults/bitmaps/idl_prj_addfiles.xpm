@@ -1,0 +1,30 @@
+/* XPM */
+static char *idl_prj_addfiles[] = {
+/* columns rows colors chars-per-pixel */
+"16 16 8 1",
+"  s Gray100 m white c Gray100",
+". s none m none c none",
+"X s Gray80 m white c Gray80",
+"o s #c0c0c0 m white c #c0c0c0",
+"O s Gray46 m black c Gray46",
+"+ s Gray25 m black c Gray25",
+"@ s Gray10 m black c Gray10",
+"# s Gray0 m black c Gray0",
+/* pixels */
+".....@@@@@@@....",
+".....@......@...",
+"...@@@@@@@  .@..",
+"...@......@ .@..",
+".@@@@@@@  .@.@..",
+".@    oX@ .@.@..",
+".@      X@.@.@..",
+".@   @  X@.@.@..",
+".@   @o o@.@.@OO",
+".@ @@@@@X@.@.@+O",
+".@  o@ooX@.@@@OO",
+".@   @o o@.@+OO.",
+".@    o o@@@OO..",
+".@      o#+OO...",
+".@@@@@@@@@OO....",
+"................"
+};

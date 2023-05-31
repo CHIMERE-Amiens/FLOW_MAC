@@ -1,0 +1,26 @@
+/* XPM */
+static char * upstk_xpm[] = {
+/* width height ncolors cpp [x_hot y_hot] */
+"16 15 5 1 0 0",
+/* colors */
+" 	s none	m none	c none",
+".	s black	m black	c black",
+"X	s gray m white	c gray",
+"o	s white	m white	c white",
+"O	s blue	m black	c blue",
+/* pixels */
+"  ..............",
+"  ..............",
+"  Xoooooooooooo.",
+" ......ooooOooo.",
+".OOOOOO.ooOOOoo.",
+"XOOOOOO.oOOOOOo.",
+" ......XOOOOOOOX",
+"X     X.oooOoooX",
+" ......XoooOoooX",
+"X     X.oooOooo.",
+" ......XoooOooo.",
+"X     X.........",
+" ......X        ",
+"X     X.        ",
+" ......         "};

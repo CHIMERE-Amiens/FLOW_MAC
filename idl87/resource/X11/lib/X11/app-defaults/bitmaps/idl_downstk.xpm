@@ -1,0 +1,26 @@
+/* XPM */
+static char * downstk_xpm[] = {
+/* width height ncolors cpp [x_hot y_hot] */
+"16 15 5 1 0 0",
+/* colors */
+" 	s none	m none	c none",
+".	s black	m black	c black",
+"X	s gray 	m white	c gray",
+"o	s white	m white	c white",
+"O	s blue	m black	c blue",
+/* pixels */
+"  ..............",
+"  ..............",
+"  XooooooooOooo.",
+" ......ooooOooo.",
+".OOOOOO.oooOooo.",
+"XOOOOOO.oooOooo.",
+" ......XOOOOOOOX",
+"X     X.oOOOOOoX",
+" ......XooOOOooX",
+"X     X.oooOooo.",
+" ......Xooooooo.",
+"X     X.........",
+" ......X        ",
+"X     X.        ",
+" ......         "};
