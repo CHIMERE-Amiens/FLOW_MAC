@@ -1,0 +1,23 @@
+/* XPM */
+static char * image_name[] = {
+"16 16 4 1",
+" 	s none	m none	c none",
+".	s blue m black c blue",
+"X	s gray m white	c gray",
+"o	s black m black c black",
+"                ",
+"        .....X  ",
+" oo    ..  X..X ",
+" ooo  ..X   ... ",
+" oooo ..X   ... ",
+" ooooo X.  X..X ",
+" oooooo    ..X  ",
+" ooooooo  ..    ",
+" oooooooo..X    ",
+" ooooo   ..X    ",
+" ooooo          ",
+" o  ooo  ...    ",
+"    ooo  ...    ",
+"     ooo        ",
+"     ooo        ",
+"                "};
