@@ -1,0 +1,37 @@
+#!/bin/sh
+#
+#	$Id: //depot/InDevelopment/integration/ENVI_product/release_eng/unix/install/yesno#2 $
+#
+# This script asks a y/n question of the user:
+#
+#	$* - The y/n question to ask, without the "(y/n) ?" at the end.
+#
+# A 0 is echoed for "no", a 1 for "yes".
+#
+
+if [ "`echo -n testing123`" = "testing123" ]; then
+  ECHO_NONL="echo -n"
+  ECHO_NONL_TAIL=
+else
+  ECHO_NONL=echo
+  ECHO_NONL_TAIL=\\c
+fi
+
+
+RESP=""
+while [ "$RESP" != y -a "$RESP" != n ]
+do
+  $ECHO_NONL "$*? (y/n): $ECHO_NONL_TAIL" > /dev/tty
+  read RESP
+  RESP=`echo $RESP | tr '[A-Z]' '[a-z]'`
+  if [ "$RESP" != y -a "$RESP" != n ]; then
+    echo "        <Please answer y for yes or n for no>" > /dev/tty
+  fi
+done
+if [ "$RESP" = y ]; then
+  echo 1
+else
+  echo 0
+fi
+
+exit 0

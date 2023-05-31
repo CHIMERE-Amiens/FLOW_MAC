@@ -1,0 +1,223 @@
+#!/bin/sh 
+#
+#	$Id: //depot/InDevelopment/integration/ENVI_product/release_eng/unix/install/bridge_post_unpack#3 $
+#
+# unpack_idl
+#
+# This script expects to be run from the top level harris directory
+# after IDL has been unpacked from the distribution media. It performs
+# tasks that need to be run on the target machine to complete localization.
+#
+#	$1 - If $1 is non-empty, this script assumes that it's being
+#	     run directly from the tty and offers the user the option
+#	     of trimming excess binaries from the IDL tree. Otherwise, it
+#	     limits itself to non-interactive setup tasks.
+
+VERSION=87
+ENVI_VERSION=55
+
+# If this is an ENVI install, go into the envixx directory.
+if [ "$1" = "ENVI" ]; then
+  cd envi$ENVI_VERSION
+fi
+
+IDL_DIR=`pwd`/idl$VERSION
+IDL_BIN=$IDL_DIR/bin
+UDIR=`pwd`
+EXELIS_DIR=`pwd`
+UNAME=`uname`
+
+
+# Create the shell scripts bridge_setup, bridge_setup.ksh and 
+# bridge_setup.bash, which can be used to set up the environment variables 
+# required by the IDL connectivity bridges.
+#
+# C shell users should source bridge_setup from their .cshrc files,
+# using the full path to the IDL directory as follows:
+#    source full_path_to_IDL_Directory/idl_setup
+# Korn shell users should run bridge_setup.ksh from their
+# .profile file (using the ". bridge_setup.ksh" notation), as follows:
+#    . full_path_to_IDL_Directory/bridge_setup.ksh
+# Bash shell users should source bridge_setup from their .bashrc files,
+# using the full path to the IDL directory as follows:
+#    . full_path_to_IDL_Directory/bridge_setup.bash
+
+echo "
+# Korn and Bash shell commands to define IDL environment variables for the 
+# connectivity bridges.
+#
+# These scripts can be used by IDL users who use ksh or bash as their 
+# interactive shell to define the environment variables required 
+# by IDL connectivity bridges using the following command:
+#
+# Korn shell users should run bridge_setup.ksh from their .profile file,
+# using the full path the the IDL directory as follows:
+#    . $IDL_DIR/bin/bridge_setup.ksh
+# Bash shell users should source bridge_setup.bash from their .bashrc files,
+# using the full path to the IDL directory as follows:
+#    . $IDL_DIR/bin/bridge_setup.bash
+#
+
+EXELIS_DIR=$EXELIS_DIR
+IDL_DIR=$IDL_DIR
+export EXELIS_DIR IDL_DIR
+
+UNAME=\`uname\`
+
+case \$UNAME in
+	\"SunOS\")
+            BIN_ARCH=/usr/bin/arch
+            if [ -x /usr/bin/arch ]; then
+                BIN_ARCH=/usr/bin/arch
+            elif [ -x /usr/ucb/arch ]; then
+                BIN_ARCH=/usr/ucb/arch
+            fi
+            if [ \`\$BIN_ARCH\` = i86pc ]; then
+              ARCH=\".x86_64\"
+            else
+              ARCH=\".sparc64\"
+            fi
+            BIN_DIR=\"\$IDL_DIR/bin/bin.solaris2\$ARCH\"
+            if [ \"\$LD_LIBRARY_PATH\" = \"\" ]; then
+                LD_LIBRARY_PATH=\$BIN_DIR
+            else
+                LD_LIBRARY_PATH=\"\$BIN_DIR\":\"\$LD_LIBRARY_PATH\"
+            fi
+           export LD_LIBRARY_PATH
+        ;;
+
+	\"Linux\")
+           BIN_ARCH=/bin/arch
+           ARCH=\".x86_64\"
+           if [ -x \$BIN_ARCH ]; then
+              if [ \`\$BIN_ARCH\` = \"x86_64\" ] && \\
+                 [ -f \$IDL_DIR/bin/bin.linux.x86_64/idl ]; then
+                 if [ ! -f \$IDL_DIR/bin/bin.linux.x86/idl ] || \\
+                    ( [ -f \$IDL_DIR/bin/bin.linux.x86/idl ] && \\
+                      [ \$IDL_PREFER_64 ] ) ; then
+                    ARCH=\".x86_64\"
+                 fi
+              fi
+           fi
+           BIN_DIR=\"\$IDL_DIR/bin/bin.linux\$ARCH\"
+           if [ \"\$LD_LIBRARY_PATH\" = \"\" ]; then
+               LD_LIBRARY_PATH=\"\$BIN_DIR\"
+           else
+               LD_LIBRARY_PATH=\"\$BIN_DIR\":\"\$LD_LIBRARY_PATH\"
+           fi
+           export LD_LIBRARY_PATH
+        ;;
+
+	\"Darwin\")
+           ARCH=\".x86_64\"
+ 	   BIN_DIR=\"\$IDL_DIR/bin/bin.darwin\$ARCH\"
+           if [ \"\$DYLD_LIBRARY_PATH\" = \"\" ]; then
+               DYLD_LIBRARY_PATH=\"\$BIN_DIR\"
+           else
+               DYLD_LIBRARY_PATH=\"\$BIN_DIR\":\"\$DYLD_LIBRARY_PATH\"
+           fi
+           export DYLD_LIBRARY_PATH
+        ;;
+
+        *)
+        ;;
+    
+esac
+
+PATH=\"\$PATH:\$BIN_DIR\"
+export PATH
+
+if [ \$CLASSPATH ];  then
+    CLASSPATH=\"\$CLASSPATH\":.:\"\$IDL_DIR/resource/bridges/export/java/javaidlb.jar\"
+else
+    CLASSPATH=\".:\$IDL_DIR/resource/bridges/export/java/javaidlb.jar\"
+fi
+export CLASSPATH
+
+" > $IDL_BIN/bridge_setup.ksh
+chmod 755 $IDL_BIN/bridge_setup.ksh
+cp $IDL_BIN/bridge_setup.ksh $IDL_BIN/bridge_setup.bash
+chmod 755 $IDL_BIN/bridge_setup.bash
+
+#-----------------------------------------------------------------
+
+echo "
+# C shell commands to define IDL environment variables for the 
+# connectivity bridges.
+#
+# This script can be used by IDL users who use csh as their interactive shell
+# to define the environment variables required by IDL connectivity bridges
+# using the following command:
+#
+#    source $IDL_DIR/bin/bridge_setup
+
+
+setenv EXELIS_DIR $EXELIS_DIR
+setenv IDL_DIR $IDL_DIR
+
+set UNAME=\`uname\`
+
+switch (\$UNAME)
+	case \"SunOS\":
+            set BIN_ARCH=/usr/bin/arch
+            if ( -x /usr/bin/arch ) then
+                set BIN_ARCH=/usr/bin/arch
+            else if ( -x /usr/ucb/arch ) then
+                set BIN_ARCH=/usr/ucb/arch
+            endif
+            if ( \`\$BIN_ARCH\` == i86pc ) then
+              set ARCH=\".x86_64\"
+            else
+              set ARCH=\".sparc64\"
+            endif
+            set BIN_DIR=\"\$IDL_DIR/bin/bin.solaris2\$ARCH\"
+            if (\$?LD_LIBRARY_PATH == 0 ) then
+                setenv LD_LIBRARY_PATH \$BIN_DIR
+            else
+                setenv LD_LIBRARY_PATH \"\$BIN_DIR\":\"\$LD_LIBRARY_PATH\"
+            endif
+        breaksw
+
+ 	case \"Linux\":
+           set ARCH=\".x86_64\"
+           if ( -x /bin/arch ) then
+              if (( \`/bin/arch \` == \"x86_64\" ) && \\
+                  ( -f \$IDL_DIR/bin/bin.linux.x86_64/idl)) then
+                if ( ( ! -f \$IDL_DIR/bin/bin.linux.x86/idl ) || \\
+                     ( ( -f \$IDL_DIR/bin/bin.linux.x86/idl ) && \\
+                       ( \$?IDL_PREFER_64 ) ) ) then
+                  set ARCH=\".x86_64\"
+                endif
+              endif
+           endif
+           set BIN_DIR=\"\$IDL_DIR/bin/bin.linux\$ARCH\"
+           if (\$?LD_LIBRARY_PATH == 0 )  then
+               setenv LD_LIBRARY_PATH \"\$BIN_DIR\"
+           else
+               setenv LD_LIBRARY_PATH \"\$BIN_DIR\":\"\$LD_LIBRARY_PATH\"
+           endif
+        breaksw
+
+	case \"Darwin\":
+           set ARCH=\".x86_64\"
+ 	   set	BIN_DIR=\"\$IDL_DIR/bin/bin.darwin\$ARCH\"
+           if (\$?DYLD_LIBRARY_PATH == 0)  then
+               setenv DYLD_LIBRARY_PATH \"\$BIN_DIR\"
+           else
+               setenv DYLD_LIBRARY_PATH \"\$BIN_DIR\":\"\$DYLD_LIBRARY_PATH\"
+           endif
+        breaksw
+
+        default:
+endsw
+
+set path = (\$path \$BIN_DIR)
+
+if (\$?CLASSPATH == 0)  then
+    setenv CLASSPATH \".:\$IDL_DIR/resource/bridges/export/java/javaidlb.jar\"
+else
+    setenv CLASSPATH \"\$CLASSPATH\":.:\"\$IDL_DIR/resource/bridges/export/java/javaidlb.jar\"
+endif
+
+" > $IDL_BIN/bridge_setup
+chmod 755 $IDL_BIN/bridge_setup

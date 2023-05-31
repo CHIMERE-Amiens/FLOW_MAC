@@ -1,0 +1,121 @@
+#!/bin/sh
+#
+# $Id: //depot/InDevelopment/integration/ENVI_product/release_eng/unix/install/online_help_pdf#2 $
+#
+# Unix IDL executes this script when the ONLINE_HELP command is given an
+# PDF file to display. It is called with the following syntax:
+#
+#	online_help_pdf file &
+#
+# where the single argument contains the fully qualified name of the
+# PDF file to display (an absolute path, not a relative path).
+# The job is run in the background (hence the &), meaning that
+# IDL does not wait for it to finish before it continues on.
+#
+# Typically, pdf viewer are configured so that the browser's
+# executable file can be found via user's PATH environment variable.
+# If this is not the case with your preferred viewer, you have several
+# options:
+#
+#	- Make a symlink from a directory that _is_ included in the
+#	  PATH environment variable pointing at the PDF viewer. For example,
+#	  it is common to place such a link in /usr/local/bin.
+#	- Alter your PATH environment variable so it includes the
+#	  directory containing your desired PDF viewer.
+#	- Modify a copy of this script to include the full path to
+#	  your PDF viewer's executable, and set the IDL_ONLINE_HELP_CMD
+#	  environment variable to point to the modified script (see below).
+#
+# Two environment variables control how this feature works:
+#
+#    IDL_ONLINE_HELP_PDF_CMD
+#	Normally, ONLINE_HELP runs the online_help_pdf script found in
+#	the bin directory of the IDL distribution. However, if
+#	IDL_ONLINE_HELP_PDF_CMD is set, the script it specifies is used
+#	instead. The Unix world has multiple viewers, some of which are not
+#	known to the standard ExelisVIS-supplied script. This feature allows
+#	you to make a copy of the default script, modify it to suit
+#	your purposes, and then instruct IDL to use it without altering
+#	the one in the IDL distribution (which should generally be left
+#	as is).
+#
+#	Note:
+#	If you add support for a viewer, consider sending the necessary
+#	changes back to ExelisVIS for inclusion in the next release.
+#
+#    IDL_ONLINE_HELP_PDF_VIEWER
+#       Normally, ONLINE_HELP makes a reasonable assumption about the
+#	PDF viewer to use:
+#	    - On a Macintosh, use the open command and let the system
+#             use the default viewer.
+#           - On other Unix systems, try to use the free Adobe acrobat
+#	      viewer (acroread).
+#           - If acroread is not available, try to use the free xpdf viewer.
+#	Set this environment variable to the name of a different
+#       viewer to make it your default. Note that this variable should be
+#	set equal to the _name_ of the viewer, not the path to its executable
+#	file. The name must correspond to one of the viewers defined in
+#	the 'case' statement below.
+#
+
+
+# If viewer is not specified by the environment variable, choose a default
+VIEWER=$IDL_ONLINE_HELP_PDF_VIEWER
+if [ \( "$VIEWER" = "" \) -a \( `uname` = "Darwin" \) ]; then
+  VIEWER=darwin_open
+fi
+
+if [ "$VIEWER" = "" ]; then
+  # If we see Adobe's acroread, we'll default to it.
+  for DIR in `echo $PATH | sed 's/:/ /g'`; do
+    if [ -f "$DIR/acroread" ]; then
+      VIEWER=acroread
+    fi
+  done
+fi
+
+# If we didn't find acroread, then try the free Xpdf viewer
+if [ "$VIEWER" = "" ]; then
+  for DIR in `echo $PATH | sed 's/:/ /g'`; do
+    if [ -f "$DIR/xpdf" ]; then
+      VIEWER=xpdf
+    fi
+  done
+fi
+  
+
+
+case "$VIEWER" in
+
+"darwin_open")
+    # Mac OS X has the concept of documents and associated files, and
+    # all that is necessary to display a given document is to use the
+    # open command. open will launch the default web viewer using the
+    # same standard system mechanism used by the desktop when you double
+    # click on a file. The system ships with a standard PDF viewer, so
+    # there is a very high likelyhood that this will succeed.
+    open $1 &
+    ;;
+
+"acroread")
+    acroread $1 &
+    ;;
+
+"xpdf")
+    xpdf $1 &
+    ;;
+
+"")
+    # No view in evidence.
+    echo "PDF viewer (acroread or xpdf) not found in user's PATH" 1>&2
+    exit 1
+    ;;
+
+*)
+    echo "$0: The $VIEWER viewer is not known to ONLINE_HELP."
+    exit 1
+    ;;
+
+esac
+
+exit 0

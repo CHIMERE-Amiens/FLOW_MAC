@@ -1,0 +1,325 @@
+#!/bin/sh
+#
+#       $Id: //depot/InDevelopment/integration/ENVI_product/release_eng/unix/install/install#7 $
+#
+# install
+#
+# This shell script carries out the steps required to install IDL
+# or an IDL based product once the main directory has been unpacked.
+# It expects to be run from the harris directory.
+#
+
+# Make sure whoami is found on Solaris
+PATH="$PATH:/usr/ucb"
+USER=`whoami`
+LANDMARK=resource/fonts/hersh1.chr
+SET_LINKS=1
+
+# Establish the name (upper and lower case) and the version.
+NAME="IDL"
+PROD_VERSION=87
+IDL_VERSION=87
+IDLDIR_VERS=idl${IDL_VERSION}
+IDLDIR=idl
+EXELISDIR=`pwd`
+PARENT_DIR=idl${IDL_VERSION}
+
+if [ "$1" = "NOT_INTERACTIVE" ]; then
+   NOT_INTERACTIVE=1
+else
+   NOT_INTERACTIVE=
+fi
+
+
+PRODUCT=`echo $NAME | tr [A-Z] [a-z]`
+if [ "$PRODUCT" != "idl" ]; then
+   LAYERED=1
+fi
+
+ENVI_PRODUCT=envi
+ENVI_VERSION=55
+ENVI_PRODUCT_VERSION=${ENVI_PRODUCT}${ENVI_VERSION}
+
+if [ \( "$PRODUCT" = "envi" \) ]; then
+  PRODUCTBIN=${EXELISDIR}/${ENVI_PRODUCT_VERSION}/${IDLDIR}/bin
+  PRODUCTBIN_VERS=${EXELISDIR}/${ENVI_PRODUCT_VERSION}/${IDLDIR_VERS}/bin
+  IDLBIN=${EXELISDIR}/${ENVI_PRODUCT}/${IDLDIR}/bin
+  IDLBIN_VERS=${EXELISDIR}/${ENVI_PRODUCT_VERSION}/${IDLDIR_VERS}/bin
+  IDLDIR_VERS=${ENVI_PRODUCT_VERSION}/idl${IDL_VERSION}
+  IDLDIR=${ENVI_PRODUCT}/idl
+  PARENT_DIR=${ENVI_PRODUCT_VERSION}/idl${IDL_VERSION}
+else
+  IDLBIN=${EXELISDIR}/${IDLDIR}/bin
+  IDLBIN_VERS=${EXELISDIR}/${IDLDIR_VERS}/bin
+fi
+
+PRODUCT_VERSION=${PRODUCT}${PROD_VERSION}
+
+ENVI_BIN=${EXELISDIR}/${ENVI_PRODUCT}/bin
+ENVI_BIN_VERS=${EXELISDIR}/${ENVI_PRODUCT_VERSION}/bin
+ENVI_PRODUCTBIN=${EXELISDIR}/${ENVI_PRODUCT}/bin
+ENVI_PRODUCTBIN_VERS=${EXELISDIR}/${ENVI_PRODUCT_VERSION}/bin
+ENVI_PRODUCT_VERSION=${ENVI_PRODUCT}${ENVI_VERSION}
+
+if [ "$1" = "LICENSE" ]; then
+  cat  ${IDLDIR_VERS}/help/copyrights/license.txt | more
+  echo ""
+  if [ `sh $IDLBIN_VERS/yesno "Do you accept all of the terms of the preceding license agreement"` = 0 ]; then exit 1; fi
+fi
+
+
+if [ \( "$PRODUCT" = "envi" \) ]; then
+  # Defines product links for ENVI
+  ENVI_LINK1=envi
+  ENVI_LINK1_VERSION=envi${ENVI_VERSION}
+  ENVI_LINK2=envi_rt
+  ENVI_LINK2_VERSION=envi_rt${ENVI_VERSION}
+  ENVI_LINK3=envihelp
+  ENVI_LINK3_VERSION=envihelp${ENVI_VERSION}
+
+  ENVI_LINK4=
+  ENVI_LINK4_VERSION=
+  ENVI_LINK5=
+  ENVI_LINK5_VERSION=
+  ENVI_LINK6=
+  ENVI_LINK6_VERSION=
+
+  ENVI_LINK7=envitaskengine
+  ENVI_LINK7_VERSION=envitaskengine${ENVI_VERSION}
+  PARENT_DIR=
+fi
+
+  if [ ! -f $EXELISDIR/$IDLDIR_VERS/$LANDMARK ]; then
+    echo "
+      The current directory must be set to the harris directory.
+      Change the default to the harris directory and re-run
+      this script.
+        "
+    exit 1
+  fi
+
+
+# Preserve the file modes in the source tar files
+umask 000
+
+
+# Symbolic links.
+
+  if [ "$ENVI_LINK1" != "" ]; then
+     ENVI_LINK1_LN="
+           ln -s \$EXELIS/$ENVI_PRODUCT_VERSION/bin/$ENVI_LINK1    LOCAL_DIR/$ENVI_LINK1_VERSION
+           ln -s \$EXELIS/$ENVI_PRODUCT/bin/$ENVI_LINK1    LOCAL_DIR/$ENVI_LINK1
+"
+  fi
+  if [ "$ENVI_LINK2" != "" ]; then
+     ENVI_LINK2_LN="
+           ln -s \$EXELIS/$ENVI_PRODUCT_VERSION/bin/$ENVI_LINK2    LOCAL_DIR/$ENVI_LINK2_VERSION
+           ln -s \$EXELIS/$ENVI_PRODUCT/bin/$ENVI_LINK2    LOCAL_DIR/$ENVI_LINK2
+"
+  fi
+  if [ "$ENVI_LINK3" != "" ]; then
+     ENVI_LINK3_LN="
+           ln -s \$EXELIS/$ENVI_PRODUCT_VERSION/bin/$ENVI_LINK3    LOCAL_DIR/$ENVI_LINK3_VERSION
+           ln -s \$EXELIS/$ENVI_PRODUCT/bin/$ENVI_LINK3    LOCAL_DIR/$ENVI_LINK3
+"
+  fi
+  if [ "$ENVI_LINK4" != "" ]; then
+     ENVI_LINK4_LN="
+           ln -s \$EXELIS/$ENVI_PRODUCT_VERSION/bin/$ENVI_LINK4    LOCAL_DIR/$ENVI_LINK4_VERSION
+           ln -s \$EXELIS/$ENVI_PRODUCT/bin/$ENVI_LINK4    LOCAL_DIR/$ENVI_LINK4
+"
+  fi
+  if [ "$ENVI_LINK5" != "" ]; then
+     ENVI_LINK5_LN="
+           ln -s \$EXELIS/$ENVI_PRODUCT_VERSION/bin/$ENVI_LINK5    LOCAL_DIR/$ENVI_LINK5_VERSION
+           ln -s \$EXELIS/$ENVI_PRODUCT/bin/$ENVI_LINK5    LOCAL_DIR/$ENVI_LINK5
+"
+  fi
+
+  if [ "$ENVI_LINK6" != "" ]; then
+     ENVI_LINK6_LN="
+           ln -s \$EXELIS/$ENVI_PRODUCT_VERSION/bin/$ENVI_LINK6    LOCAL_DIR/$ENVI_LINK6_VERSION
+           ln -s \$EXELIS/$ENVI_PRODUCT/bin/$ENVI_LINK6    LOCAL_DIR/$ENVI_LINK6
+"
+  fi
+  
+  if [ "$ENVI_LINK7" != "" ]; then
+     ENVI_LINK7_LN="
+           ln -s \$EXELIS/$ENVI_PRODUCT_VERSION/bin/$ENVI_LINK7    LOCAL_DIR/$ENVI_LINK7_VERSION
+           ln -s \$EXELIS/$ENVI_PRODUCT/bin/$ENVI_LINK7    LOCAL_DIR/$ENVI_LINK7
+"
+  fi  
+
+IDL_LN="
+           ln -s \$EXELIS/${IDLDIR_VERS}/bin/idl    LOCAL_DIR/idl$IDL_VERSION
+           ln -s \$EXELIS/${IDLDIR}/bin/idl  LOCAL_DIR/idl
+
+           ln -s \$EXELIS/${IDLDIR_VERS}/bin/idlde    LOCAL_DIR/idlde$IDL_VERSION
+           ln -s \$EXELIS/${IDLDIR}/bin/idlde  LOCAL_DIR/idlde
+
+           ln -s \$EXELIS/${IDLDIR_VERS}/bin/idlrpc    LOCAL_DIR/idlrpc$IDL_VERSION
+           ln -s \$EXELIS/${IDLDIR}/bin/idlrpc  LOCAL_DIR/idlrpc
+
+           ln -s \$EXELIS/${IDLDIR_VERS}/bin/idlhelp    LOCAL_DIR/idlhelp$IDL_VERSION
+           ln -s \$EXELIS/${IDLDIR}/bin/idlhelp  LOCAL_DIR/idlhelp
+
+           ln -s \$EXELIS/${IDLDIR_VERS}/bin/idltaskengine    LOCAL_DIR/idltaskengine$IDL_VERSION
+           ln -s \$EXELIS/${IDLDIR}/bin/idltaskengine  LOCAL_DIR/idltaskengine
+
+           ln -s \$EXELIS/${IDLDIR_VERS}/bin/harrislicense    LOCAL_DIR/harrislicense$IDL_VERSION
+           ln -s \$EXELIS/${IDLDIR}/bin/harrislicense    LOCAL_DIR/harrislicense
+"
+
+if [ "$NOT_INTERACTIVE" != "1" ]; then
+	if [ \( "$PRODUCT" = "envi" \) ]; then
+		PRODUCTBIN=$ENVI_PRODUCTBIN
+	fi
+echo "
+----------------------
+Symbolic link script:
+----------------------
+"
+fi 	# ! NOT_INTERACTIVE
+
+
+if [ $SET_LINKS = "1" ]; then
+  #echo " "
+  # If the system lacks /usr/local or /usr/local/bin, then create them.
+  # If we're not root, then don't bother
+  if [ "$USER" = root ]; then
+    for DIR in local local/bin; do
+      if [ ! -d /usr/$DIR ]; then
+        echo "System lacks directory /usr/$DIR. Creating..."
+        mkdir /usr/$DIR
+        chmod 775 /usr/$DIR
+      fi
+    done
+  fi
+
+  STATUS=0
+
+
+
+  # Link harris directory to /usr/local/harris. If we are already there,
+  # the symbolic link will fall harmlessly inside the harris
+  # directory where we'll find and remove it.
+  #if [ "$EXELISDIR" != "/usr/local/harris" ]; then    # This if-stmt is not foolproof
+  #  $IDLBIN_VERS/make_link $EXELISDIR /usr/local/harris $NOT_INTERACTIVE
+  #  if [ $? != 0 ]; then STATUS=1; fi
+  #  if [ -w $EXELISDIR/harris ]; then rm -f $EXELISDIR/harris; fi
+  #fi
+
+  # Set the ENVI links if they exist
+  if [ "$ENVI_LINK1" != "" ]; then
+     $IDLBIN_VERS/make_link $ENVI_PRODUCTBIN_VERS/$ENVI_LINK1 /usr/local/bin/$ENVI_LINK1_VERSION $NOT_INTERACTIVE
+     if [ $? != 0 ]; then STATUS=1; fi
+     $IDLBIN_VERS/make_link $ENVI_PRODUCTBIN/$ENVI_LINK1 /usr/local/bin/$ENVI_LINK1 $NOT_INTERACTIVE
+     if [ $? != 0 ]; then STATUS=1; fi
+  fi
+
+  if [ "$ENVI_LINK2" != "" ]; then
+     $IDLBIN_VERS/make_link $ENVI_PRODUCTBIN_VERS/$ENVI_LINK2 /usr/local/bin/$ENVI_LINK2_VERSION $NOT_INTERACTIVE
+     if [ $? != 0 ]; then STATUS=1; fi
+     $IDLBIN_VERS/make_link $ENVI_PRODUCTBIN/$ENVI_LINK2 /usr/local/bin/$ENVI_LINK2 $NOT_INTERACTIVE
+     if [ $? != 0 ]; then STATUS=1; fi
+  fi
+
+  if [ "$ENVI_LINK3" != "" ]; then
+     $IDLBIN_VERS/make_link $ENVI_PRODUCTBIN_VERS/$ENVI_LINK3 /usr/local/bin/$ENVI_LINK3_VERSION $NOT_INTERACTIVE
+     if [ $? != 0 ]; then STATUS=1; fi
+     $IDLBIN_VERS/make_link $ENVI_PRODUCTBIN/$ENVI_LINK3 /usr/local/bin/$ENVI_LINK3 $NOT_INTERACTIVE
+     if [ $? != 0 ]; then STATUS=1; fi
+  fi
+
+  if [ "$ENVI_LINK4" != "" ]; then
+     $IDLBIN_VERS/make_link $ENVI_PRODUCTBIN_VERS/$ENVI_LINK4 /usr/local/bin/$ENVI_LINK4_VERSION $NOT_INTERACTIVE
+     if [ $? != 0 ]; then STATUS=1; fi
+     $IDLBIN_VERS/make_link $ENVI_PRODUCTBIN/$ENVI_LINK4 /usr/local/bin/$ENVI_LINK4 $NOT_INTERACTIVE
+     if [ $? != 0 ]; then STATUS=1; fi
+  fi
+
+  if [ "$ENVI_LINK5" != "" ]; then
+     $IDLBIN_VERS/make_link $ENVI_PRODUCTBIN_VERS/$ENVI_LINK5 /usr/local/bin/$ENVI_LINK5_VERSION $NOT_INTERACTIVE
+     if [ $? != 0 ]; then STATUS=1; fi
+     $IDLBIN_VERS/make_link $ENVI_PRODUCTBIN/$ENVI_LINK5 /usr/local/bin/$ENVI_LINK5 $NOT_INTERACTIVE
+     if [ $? != 0 ]; then STATUS=1; fi
+  fi
+
+  if [ "$ENVI_LINK6" != "" ]; then
+     $IDLBIN_VERS/make_link $ENVI_PRODUCTBIN_VERS/$ENVI_LINK6 /usr/local/bin/$ENVI_LINK6_VERSION $NOT_INTERACTIVE
+     if [ $? != 0 ]; then STATUS=1; fi
+     $IDLBIN_VERS/make_link $ENVI_PRODUCTBIN/$ENVI_LINK6 /usr/local/bin/$ENVI_LINK6 $NOT_INTERACTIVE
+     if [ $? != 0 ]; then STATUS=1; fi
+  fi
+  
+  if [ "$ENVI_LINK7" != "" ]; then
+     $IDLBIN_VERS/make_link $ENVI_PRODUCTBIN_VERS/$ENVI_LINK7 /usr/local/bin/$ENVI_LINK7_VERSION $NOT_INTERACTIVE
+     if [ $? != 0 ]; then STATUS=1; fi
+     $IDLBIN_VERS/make_link $ENVI_PRODUCTBIN/$ENVI_LINK7 /usr/local/bin/$ENVI_LINK7 $NOT_INTERACTIVE
+     if [ $? != 0 ]; then STATUS=1; fi
+  fi
+
+  $IDLBIN_VERS/make_link $IDLBIN_VERS/idl /usr/local/bin/idl$IDL_VERSION $NOT_INTERACTIVE
+  if [ $? != 0 ]; then STATUS=1; fi
+
+  $IDLBIN_VERS/make_link $IDLBIN/idl /usr/local/bin/idl $NOT_INTERACTIVE
+  if [ $? != 0 ]; then STATUS=1; fi
+ 
+
+  if [ -x $IDLBIN_VERS/idlde ]; then
+    $IDLBIN_VERS/make_link $IDLBIN_VERS/idlde /usr/local/bin/idlde$IDL_VERSION $NOT_INTERACTIVE
+    if [ $? != 0 ]; then STATUS=1; fi
+  fi
+
+  if [ -x $IDLBIN/idlde ]; then
+    $IDLBIN_VERS/make_link $IDLBIN/idlde /usr/local/bin/idlde $NOT_INTERACTIVE
+    if [ $? != 0 ]; then STATUS=1; fi
+  fi
+
+  if [ -x $IDLBIN_VERS/idlhelp ]; then
+    $IDLBIN_VERS/make_link $IDLBIN_VERS/idlhelp /usr/local/bin/idlhelp$IDL_VERSION $NOT_INTERACTIVE
+    if [ $? != 0 ]; then STATUS=1; fi
+  fi
+
+  if [ -x $IDLBIN/idlhelp ]; then
+    $IDLBIN_VERS/make_link $IDLBIN/idlhelp /usr/local/bin/idlhelp $NOT_INTERACTIVE
+    if [ $? != 0 ]; then STATUS=1; fi
+  fi
+
+  if [ -x $IDLBIN_VERS/idlrpc ]; then
+    $IDLBIN_VERS/make_link $IDLBIN_VERS/idlrpc /usr/local/bin/idlrpc$IDL_VERSION $NOT_INTERACTIVE
+    if [ $? != 0 ]; then STATUS=1; fi
+  fi
+
+  if [ -x $IDLBIN/idlrpc ]; then
+    $IDLBIN_VERS/make_link $IDLBIN/idlrpc /usr/local/bin/idlrpc $NOT_INTERACTIVE
+    if [ $? != 0 ]; then STATUS=1; fi
+  fi
+
+  if [ -x $IDLBIN_VERS/idltaskengine ]; then
+    $IDLBIN_VERS/make_link $IDLBIN_VERS/idltaskengine /usr/local/bin/idltaskengine$IDL_VERSION $NOT_INTERACTIVE
+    if [ $? != 0 ]; then STATUS=1; fi
+  fi
+
+  if [ -x $IDLBIN/idltaskengine ]; then
+    $IDLBIN_VERS/make_link $IDLBIN/idltaskengine /usr/local/bin/idltaskengine $NOT_INTERACTIVE
+    if [ $? != 0 ]; then STATUS=1; fi
+  fi
+
+  $IDLBIN_VERS/make_link $IDLBIN_VERS/harrislicense /usr/local/bin/harrislicense$IDL_VERSION $NOT_INTERACTIVE
+  if [ $? != 0 ]; then STATUS=1; fi
+
+  $IDLBIN_VERS/make_link $IDLBIN/harrislicense /usr/local/bin/harrislicense $NOT_INTERACTIVE
+  if [ $? != 0 ]; then STATUS=1; fi
+
+  if [ "$STATUS" != "0" ]; then
+    echo "
+    Not all symbolic links were successfully installed.
+    Please correct the problem that caused this failure and re-execute install. 
+    "
+  fi
+fi
+
+echo "
+Creation of symbolic links has successfully been completed."
+

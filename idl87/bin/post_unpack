@@ -1,0 +1,312 @@
+#!/bin/sh
+#
+#	$Id: //depot/InDevelopment/integration/ENVI_product/release_eng/unix/install/post_unpack#10 $
+#
+# unpack_idl
+#
+# This script expects to be run from the top level harris directory
+# after IDL has been unpacked from the distribution media. It performs
+# tasks that need to be run on the target machine to complete localization.
+#
+#	$1 - If $1 is non-empty, this script assumes that it's being
+#	     run directly from the tty and offers the user the option
+#	     of trimming excess binaries from the IDL tree. Otherwise, it
+#	     limits itself to non-interactive setup tasks.
+
+VERSION=87
+ENVI_VERSION=55
+POST_UNPACK_ARGS=
+
+if [ "$1" = "ENVI" ]; then
+   ENVIINSTALL=1
+   POST_UNPACK_ARGS="ENVI"
+else
+   ENVIINSTALL=0
+fi
+
+if [ $ENVIINSTALL = 1 ]; then
+  IDL_DIR=`pwd`/envi$ENVI_VERSION/idl$VERSION
+  cd envi$ENVI_VERSION
+  if [ -d idl$VERSION -a ! -L idl ]; then
+     ln -s idl$VERSION idl
+  fi
+  cd ..
+elif [ -d idl$VERSION -a ! -L idl$VERSION ]; then
+  IDL_DIR=`pwd`/idl$VERSION
+  if [ -d idl$VERSION -a ! -L idl ]; then
+     ln -s idl$VERSION idl
+  fi
+fi
+
+IDL_BIN=$IDL_DIR/bin
+IDL_OBJBRIDGE_DIR=$IDL_DIR/resource/bridges/import/java
+SCRIPT=`basename $0`
+UDIR=`pwd`
+EXELIS_DIR=`pwd`
+UNAME=`uname`
+
+if [ "$1" = "RUNTIME" ]; then
+   RUNTIME=1
+else
+   RUNTIME=
+fi
+
+# Generate harrislicense command.
+echo "#! /bin/sh
+# Executed the IDL-based Harris License Administrator.
+#
+
+if [ \"\$IDL_DIR\" = \"\" ]; then
+    IDL_DIR=$IDL_DIR
+    export IDL_DIR
+fi
+
+IDL_DEVICE=X
+export IDL_DEVICE
+
+if [ ! -f \$IDL_DIR/lib/hook/license_administrator.sav ]; then
+   echo \"	The License Administrator has not been installed.  Please consult the
+	installation guide for instructions on installing the Program Files.\"
+   exit 0
+fi
+ 
+\$IDL_DIR/bin/idl "\$*" -novm -rt=\$IDL_DIR/lib/hook/license_administrator.sav
+ 
+" > $IDL_BIN/harrislicense
+
+chmod 755 $IDL_BIN/harrislicense
+
+# Create the shell scripts idl_setup and idl_setup.ksh which can be used
+# to set up the environment variables and aliases required by IDL
+# related commands (idl, idlde, idlhelp) if the links to
+# the default directory (/usr/local/harris/idl) are not being used.
+#
+# C shell users should source idl_setup or envi_setup from their .cshrc files,
+# using the full path to the IDL directory as follows:
+#    source full_path_to_IDL_Directory/idl_setup
+# Korn shell users should run idl_setup.ksh or envi_setup.ksh from their
+# .profile file (using the ". idl_setup.ksh" notation), as follows:
+#    . full_path_to_IDL_Directory/idl_setup.ksh
+#
+
+if [ "$RUNTIME" != "1" ]; then
+echo "# C shell commands to define IDL environment variables and aliases.
+#
+# This script can be used by IDL users who use csh as their interactive shell
+# to define the environment variables and aliases required by IDL
+# related commands (idl, idlde, idlhelp) if the symbolic links to
+# the default directory (/usr/local/harris/idl) are not being used.
+#
+# csh users should source idl_setup from their .cshrc files,
+# using the following command:
+#
+#    source $IDL_DIR/bin/idl_setup
+#
+
+setenv EXELIS_DIR $EXELIS_DIR
+setenv IDL_DIR $IDL_DIR
+alias harrislicense \$IDL_DIR/bin/harrislicense
+alias idl \$IDL_DIR/bin/idl
+if ( -x \$IDL_DIR/bin/idlde ) alias idlde \$IDL_DIR/bin/idlde
+if ( -x \$IDL_DIR/bin/idlhelp ) alias idlhelp \$IDL_DIR/bin/idlhelp
+if ( -x \$IDL_DIR/bin/idlrpc ) alias idlrpc \$IDL_DIR/bin/idlrpc
+if ( -x \$IDL_DIR/bin/idltaskengine ) alias idltaskengine \$IDL_DIR/bin/idltaskengine
+" > $IDL_BIN/idl_setup
+chmod 755 $IDL_BIN/idl_setup
+
+else
+echo "# C shell commands to define IDL environment variables and aliases.
+#
+# This script can be used by IDL users who use csh as their interactive shell
+# to define the environment variables and aliases required by IDL
+# related commands (idl, idlde, idlhelp) if the symbolic links to
+# the default directory (/usr/local/harris/idl) are not being used.
+#
+# csh users should source idl_setup from their .cshrc files,
+# using the following command:
+#
+#    source $IDL_DIR/bin/idl_setup
+#
+
+setenv EXELIS_DIR $EXELIS_DIR
+setenv IDL_DIR $IDL_DIR
+alias harrislicense \$IDL_DIR/bin/harrislicense
+alias idl \$IDL_DIR/bin/idl" > $IDL_BIN/idl_setup
+chmod 755 $IDL_BIN/idl_setup
+fi
+
+
+if [ "$RUNTIME" != "1" ]; then
+echo "# Korn shell commands to define IDL environment variables and aliases.
+#
+# This script can be used by IDL users who use ksh as their interactive shell
+# to define the environment variables and aliases required by IDL
+# related commands (idl, idlde, idlhelp) if the symbolic links to
+# the default directory (/usr/local/harris/idl) are not being used.
+#
+# ksh users should run idl_setup from their .profile file 
+# using the following command:
+#
+#    . $IDL_DIR/bin/idl_setup.ksh
+#
+EXELIS_DIR=$EXELIS_DIR
+IDL_DIR=$IDL_DIR
+export IDL_DIR EXELIS_DIR
+alias -x harrislicense=\$IDL_DIR/bin/harrislicense
+alias -x idl=\$IDL_DIR/bin/idl
+if [ -x \$IDL_DIR/bin/idlde ]; then
+  alias -x idlde=\$IDL_DIR/bin/idlde
+fi
+if [ -x \$IDL_DIR/bin/idlhelp ]; then
+  alias -x idlhelp=\$IDL_DIR/bin/idlhelp
+fi
+if [ -x \$IDL_DIR/bin/idlrpc ]; then
+  alias -x idlrpc=\$IDL_DIR/bin/idlrpc
+fi
+if [ -x \$IDL_DIR/bin/idltaskengine ]; then 
+  alias -x idltaskengine=\$IDL_DIR/bin/idltaskengine
+fi
+" > $IDL_BIN/idl_setup.ksh
+chmod 755 $IDL_BIN/idl_setup.ksh
+
+else   
+echo "# Korn shell commands to define IDL environment variables and aliases.
+#
+# This script can be used by IDL users who use ksh as their interactive shell
+# to define the environment variables and aliases required by IDL
+# related commands (idl, idlde, idlhelp) if the symbolic links to
+# the default directory (/usr/local/harris/idl) are not being used.
+#
+# ksh users should run idl_setup from their .profile file
+# using the following command:
+#
+#    . $IDL_DIR/bin/idl_setup.ksh
+#
+EXELIS_DIR=$EXELIS_DIR
+IDL_DIR=$IDL_DIR
+export IDL_DIR EXELIS_DIR
+alias -x harrislicense=\$IDL_DIR/bin/harrislicense
+alias -x idl=\$IDL_DIR/bin/idl" > $IDL_BIN/idl_setup.ksh
+chmod 755 $IDL_BIN/idl_setup.ksh
+fi
+
+if [ "$RUNTIME" != "1" ]; then
+echo "# Bash shell commands to define IDL environment variables and aliases.
+#
+# This script can be used by IDL users who use Bash as their interactive shell
+# to define the environment variables and aliases required by IDL
+# related commands (idl, idlde, idlhelp) if the symbolic links to
+# the default directory (/usr/local/harris/idl) are not being used.
+#
+# Bash users should run idl_setup from their .profile file 
+# using the following command:
+#
+#    . $IDL_DIR/bin/idl_setup.bash
+#
+EXELIS_DIR=$EXELIS_DIR
+IDL_DIR=$IDL_DIR
+export IDL_DIR EXELIS_DIR
+alias harrislicense=\$IDL_DIR/bin/harrislicense
+alias idl=\$IDL_DIR/bin/idl
+if [ -x \$IDL_DIR/bin/idlde ]; then
+  alias idlde=\$IDL_DIR/bin/idlde
+fi
+if [ -x \$IDL_DIR/bin/idlhelp ]; then
+  alias idlhelp=\$IDL_DIR/bin/idlhelp
+fi
+if [ -x \$IDL_DIR/bin/idlrpc ]; then
+  alias idlrpc=\$IDL_DIR/bin/idlrpc
+fi
+if [ -x \$IDL_DIR/bin/idltaskengine ]; then 
+  alias idltaskengine=\$IDL_DIR/bin/idltaskengine
+fi
+" > $IDL_BIN/idl_setup.bash
+chmod 755 $IDL_BIN/idl_setup.bash
+
+else 	#RUNTIME version
+echo "# Bash shell commands to define IDL environment variables and aliases.
+# This script can be used by IDL users who use Bash as their interactive shell
+# to define the environment variables and aliases required by IDL
+# related commands (idl, idlde, idlhelp) if the symbolic links to
+# the default directory (/usr/local/harris/idl) are not being used.
+#
+# Bash users should run idl_setup from their .profile file
+# using the following command:
+#
+#    . $IDL_DIR/bin/idl_setup.bash
+#
+EXELIS_DIR=$EXELIS_DIR
+IDL_DIR=$IDL_DIR
+export IDL_DIR EXELIS_DIR
+alias harrislicense=\$IDL_DIR/bin/harrislicense
+alias idl=\$IDL_DIR/bin/idl" > $IDL_BIN/idl_setup.bash
+chmod 755 $IDL_BIN/idl_setup.bash
+fi
+
+# Run Connectivity bridge post_unpack script
+
+
+if [ -x $IDL_BIN/bridge_post_unpack ]; then
+  $IDL_BIN/bridge_post_unpack $POST_UNPACK_ARGS
+fi
+
+
+if [ "$RUNTIME" != "1" ]; then
+  # Call script to generate the odbc.ini file for the platforms
+  # which support it.
+  if [ -x $IDL_BIN/gen_odbc_ini ]; then
+    $IDL_BIN/gen_odbc_ini $IDL_DIR AIX64
+    $IDL_BIN/gen_odbc_ini $IDL_DIR LINUX64
+  fi
+fi
+
+if [ -d $IDL_DIR/idlde/bin.darwin.x86_64 ]; then
+  ln -sf $IDL_DIR/LicenseAdministrator.app  LicenseAdministrator.app 
+fi
+
+# Update INSTALL_DIR in startapp/lmremove
+if [ -w $IDL_BIN/idl ]; then
+sed "s|INSTALL_DIR=.*|INSTALL_DIR=$EXELIS_DIR|; s|ENVIINSTALL=.*|ENVIINSTALL=$ENVIINSTALL|" $IDL_BIN/idl.orig > $IDL_BIN/idl
+fi
+if [ -w $IDL_BIN/lmremove ]; then
+sed "s|INSTALL_DIR=.*|INSTALL_DIR=$EXELIS_DIR|; s|ENVIINSTALL=.*|ENVIINSTALL=$ENVIINSTALL|" $IDL_BIN/idl.orig > $IDL_BIN/lmremove
+fi
+
+if [ -w $IDL_OBJBRIDGE_DIR ]; then
+  sed "s|.JAVABRIDGE_DIR|$IDL_OBJBRIDGE_DIR|g" $IDL_OBJBRIDGE_DIR/.idljavabrc.orig > $IDL_OBJBRIDGE_DIR/.idljavabrc
+fi
+
+if [ -f $IDL_BIN/sys5_idl_lmgrd.orig ]; then
+
+  sed "s|EXELIS_DIR=.*|EXELIS_DIR=$EXELIS_DIR|; s|IDL_DIR=.*|IDL_DIR=$IDL_DIR|" $IDL_BIN/sys5_idl_lmgrd.orig > $IDL_BIN/sys5_idl_lmgrd
+
+  chmod 750 $IDL_BIN/sys5_idl_lmgrd
+fi
+
+if [ -f $IDL_BIN/sys5_idl_dicomexstorscp.orig ]; then
+
+  sed "s|EXELIS_DIR=.*|EXELIS_DIR=$EXELIS_DIR|; s|IDL_DIR=.*|IDL_DIR=$IDL_DIR|" $IDL_BIN/sys5_idl_dicomexstorscp.orig > $IDL_BIN/sys5_idl_dicomexstorscp
+
+  chmod 750 $IDL_BIN/sys5_idl_dicomexstorscp
+fi
+if [ -f $IDL_BIN/dicomexstorscp_install.orig ]; then
+
+  sed "s|EXELIS_DIR=.*|EXELIS_DIR=$EXELIS_DIR|; s|IDL_DIR=.*|IDL_DIR=$IDL_DIR|" $IDL_BIN/dicomexstorscp_install.orig > $IDL_BIN/dicomexstorscp_install
+  chmod 755 $IDL_BIN/dicomexstorscp_install
+fi
+
+if [ -f $IDL_DIR/idlde/idlde.darwin.x86_64.app/Contents/MacOS/init.orig ]; then
+
+  sed "s|EXELIS_DIR=.*|EXELIS_DIR=$EXELIS_DIR|; s|IDL_DIR=.*|IDL_DIR=$IDL_DIR|" $IDL_DIR/idlde/idlde.darwin.x86_64.app/Contents/MacOS/init.orig > $IDL_DIR/idlde/idlde.darwin.x86_64.app/Contents/MacOS/init
+
+  chmod 755 $IDL_DIR/idlde/idlde.darwin.x86_64.app/Contents/MacOS/init
+fi
+
+if [ -f $IDL_DIR/idlde/idlde.linux.x86.ini.orig ]; then
+  sed "s|{ECLIPSE_DIR}|$IDL_DIR/idlde|" $IDL_DIR/idlde/idlde.linux.x86.ini.orig > $IDL_DIR/idlde/idlde.linux.x86.ini
+fi
+
+if [ -f $IDL_DIR/idlde/idlde.linux.x86_64.ini.orig ]; then
+  sed "s|{ECLIPSE_DIR}|$IDL_DIR/idlde|" $IDL_DIR/idlde/idlde.linux.x86_64.ini.orig > $IDL_DIR/idlde/idlde.linux.x86_64.ini
+fi
+

@@ -1,0 +1,21 @@
+#! /bin/sh
+# Executed the IDL-based Harris License Administrator.
+#
+
+if [ "$IDL_DIR" = "" ]; then
+    IDL_DIR=/Applications/harris/idl87
+    export IDL_DIR
+fi
+
+IDL_DEVICE=X
+export IDL_DEVICE
+
+if [ ! -f $IDL_DIR/lib/hook/license_administrator.sav ]; then
+   echo "	The License Administrator has not been installed.  Please consult the
+	installation guide for instructions on installing the Program Files."
+   exit 0
+fi
+ 
+$IDL_DIR/bin/idl $* -novm -rt=$IDL_DIR/lib/hook/license_administrator.sav
+ 
+

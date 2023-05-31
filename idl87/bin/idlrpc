@@ -1,0 +1,332 @@
+#!/bin/sh
+#
+#   $Id: //depot/InDevelopment/integration/ENVI_product/release_eng/unix/install/startapp#9 $
+#
+# This script determines the operating system and hardware combination
+# and overlays itself with the correct binary for the desired program.
+# The program is determined from the name by which the script is invoked.
+
+APPLICATION=`basename $0`
+APP_ARGS=
+XUL_ARGS=
+
+IDL_VERSION=87
+ENVI_VERSION=55
+STUDENT_FLAG=
+
+INSTALL_DIR=/Applications/harris
+ENVIINSTALL=0
+
+IDLDIRECTORY=idl${IDL_VERSION}
+ENVIDIRECTORY=envi${ENVI_VERSION}
+
+# Find the main IDL directory
+if [ "$IDL_DIR" = "" ]; then
+  if [ "$ENVIINSTALL" = 1 ] ; then
+      ENVI_DIR=$INSTALL_DIR/$ENVIDIRECTORY
+      IDL_DIR=$INSTALL_DIR/$ENVIDIRECTORY/$IDLDIRECTORY
+  else
+      IDL_DIR=$INSTALL_DIR/$IDLDIRECTORY
+  fi
+fi
+
+# Some applications can be invoked with or without a version suffix.
+# Recognise the versioned ones and remove the version.
+case $APPLICATION in
+"idl$IDL_VERSION") APPLICATION=idl;;
+"idlde$IDL_VERSION") APPLICATION=idlde;;
+"idlrpc$IDL_VERSION") APPLICATION=idlrpc;;
+"idltaskengine$IDL_VERSION") APPLICATION=idltaskengine;;
+"idlhelp$IDL_VERSION") APPLICATION=idlhelp;;
+"envitaskengine$ENVI_VERSION") APPLICATION=envitaskengine;;
+"envihelp$ENVI_VERSION") APPLICATION=envihelp;;
+"ExelisVISHelp$IDL_VERSION") APPLICATION=ExelisVISHelp;;
+esac
+
+if [ "$STUDENT_FLAG" != "" ]; then
+  if [ \( "$APPLICATION" = "idl" \) -o \( "$APPLICATION" = "idlde" \) ]; then
+     APP_ARGS=$STUDENT_FLAG
+  fi
+fi
+
+
+#Strip off any trailing "/" from path
+if [ "$IDLJAVAB_LIB_LOCATION" != "" ]; then 
+   IDLJAVAB_LIB_LOCATION=`echo $IDLJAVAB_LIB_LOCATION |sed 's/[\/]*$//'`
+fi
+
+# Look for a -32 argument. If seen, take note, but don't worry
+# about removing it (idl accepts it and ignores it, allowing this
+# script to be simpler). If a platform supports both 32 and 64-bit
+# versions of our application, the default is to take the 64-bit version.
+# However, -32 says to run the 32-bit version even on a 64-bit platform
+PREFER_32=0
+CLASSIC=0
+for arg
+do
+  if [ "$arg" = "-32" ]; then
+    PREFER_32=0
+  fi
+  if [ "$arg" = "-classic" ]; then
+    CLASSIC=1
+  fi
+done
+
+
+# Determine the operating system, hardware architecture, and os release
+# Make sure these agree with IDL's compiled in paths or online help
+# won't be found.
+OS=
+ARCH=
+UNAME=`uname`
+case $UNAME in
+
+    "Darwin")
+        OS="darwin"
+        BIN_ARCH=/usr/bin/arch
+        if [ `$BIN_ARCH` = ppc ]; then
+          echo "$APPLICATION: Unable to recognize system architecture."
+          exit 1
+        fi
+        #
+        ARCH=".x86_64"
+        IDLDE_ARCH=$ARCH
+        # Check to see if the machine is 64-bit capable.
+        SYSCTL_CMD="`/usr/sbin/sysctl -n hw.cpu64bit_capable 2> /dev/null`" 
+        if [ "$SYSCTL_CMD" != "1" ]; then   #Not 64-bit capable
+          echo "$APPLICATION: Unable to recognize system architecture."
+          exit 1
+        fi
+        #Get the number of allowable open file descriptors.  If it
+        #is less than 1024, set to 1024.
+        FILE_DES_NUM=`ulimit -n`
+        if [ $FILE_DES_NUM -lt 1024 ]; then
+           ulimit -n 1024 
+        fi
+
+    ;;
+
+    "Linux")
+    OS="linux"
+        ARCH=".x86_64"
+        # For JRE_ARCH, start with default of 64 bit
+        JRE_ARCH="amd64"
+        # IDLDE arch always stays 64 bit
+        IDLDE_ARCH=$ARCH
+        if [ -x /bin/arch ]; then
+          linux_arch=`/bin/arch`
+        else
+          # Ubuntu doesn't have /bin/arch
+          linux_arch=`/bin/uname -m`
+        fi
+    # If the system is running the 64-bit kernel, a 64-bit
+    # IDL is installed, and the user did not specify the -32
+    # command argument, then run the 64-bit version. we
+    # only support the 64-bit version.
+        if [ $linux_arch = x86_64 ]; then
+          if [ "$APPLICATION" = "idlde" ]; then
+            # Test for app
+            if [ -f $IDL_DIR/idlde/idlde.$OS.x86_64 ]; then
+              if [ $PREFER_32 = 0 ]; then
+                ARCH=.x86_64
+                JRE_ARCH="amd64"
+                IDLDE_ARCH=.x86_64
+              fi
+            fi
+          else
+            if [ -f $IDL_DIR/bin/bin.$OS.x86_64/$APPLICATION ]; then
+              if [ $PREFER_32 = 0 ]; then
+                ARCH=.x86_64
+                JRE_ARCH="amd64"
+                IDLDE_ARCH=.x86_64
+              fi
+            fi
+          fi
+		else
+			echo "$APPLICATION: Unable to recognize system architecture."
+			exit 1
+        fi
+    ;;
+        
+    *)
+    echo "$APPLICATION: Unable to recognize system architecture."
+    exit 1
+    ;;
+
+esac
+
+# Now we have everything we need to construct the path to the bin directory
+BIN_DIR=$IDL_DIR/bin/bin.$OS$ARCH
+BIN_DIR_IDLDE=$IDL_DIR/idlde/bin.$OS$IDLDE_ARCH
+
+
+# Add the bin directory to the library search path
+case $OS in
+    "darwin")
+    if [ "$DYLD_LIBRARY_PATH" = "" ]; then
+        DYLD_LIBRARY_PATH="$BIN_DIR"
+    else
+        DYLD_LIBRARY_PATH="$BIN_DIR:$DYLD_LIBRARY_PATH"
+    fi
+    
+    if [ "$IDLJAVAB_LIB_LOCATION" = "" ]; then
+        IDLJAVAB_LIB_LOCATION="$IDL_DIR/idlde/bin.$OS$IDLDE_ARCH/jre/lib/$JRE_ARCH/server"
+        export IDLJAVAB_LIB_LOCATION
+    fi
+    
+    if [ "$APPLICATION" = "idlde" ]; then
+        # add bindir for idlde shareable libraries
+        DYLD_LIBRARY_PATH="$BIN_DIR_IDLDE:$DYLD_LIBRARY_PATH"
+        IDL_START_DIR_DARWIN=`pwd`
+        export IDL_START_DIR_DARWIN
+    fi
+    export DYLD_LIBRARY_PATH
+    ;;
+
+    "linux")
+#        if [ "$IDL_NO_XULRUNNER" = "" ]; then
+#            XULPATH=$BIN_DIR_IDLDE/xulrunner-1.9.0.6
+#            XUL_ARGS="-vmargs -Dorg.eclipse.swt.browser.XULRunnerPath=$XULPATH"
+#        fi
+        NEW_TEXT="$BIN_DIR:$BIN_DIR/dm/lib"
+    if [ "$LD_LIBRARY_PATH" = "" ]; then
+        LD_LIBRARY_PATH="$NEW_TEXT"
+    else
+        LD_LIBRARY_PATH="$NEW_TEXT:$LD_LIBRARY_PATH"
+    fi
+
+        #  Append the Sybase lib directory if Sybase set for Dataminer
+        if [ "$SYBASE" != "" ]; then
+             LD_LIBRARY_PATH="$SYBASE/lib:$LD_LIBRARY_PATH"
+        fi
+    export LD_LIBRARY_PATH
+
+    #  Append the Oracle lib directory if ORACLE_HOME set for Dataminer
+        if [ "$ORACLE_HOME" != "" ]; then 
+             LD_LIBRARY_PATH="$ORACLE_HOME/lib:$LD_LIBRARY_PATH"
+    fi
+    if [ "$ODBCINI" = "" ]; then 
+       ODBCINI=$IDL_DIR/resource/dm/linux$ARCH/odbc.ini
+       export ODBCINI
+    fi
+
+    if [ "$IDLJAVAB_LIB_LOCATION" = "" ]; then 
+             IDLJAVAB_LIB_LOCATION="$IDL_DIR/idlde/bin.$OS$IDLDE_ARCH/jre/lib/$JRE_ARCH/server"
+             export IDLJAVAB_LIB_LOCATION
+    fi
+        LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$IDLJAVAB_LIB_LOCATION:$IDLJAVAB_LIB_LOCATION/..:$IDLJAVAB_LIB_LOCATION/../native_threads"
+
+    if [ "$APPLICATION" = "idlde" ]; then
+        # add bindir for idlde shareable libraries
+        LD_LIBRARY_PATH="$BIN_DIR_IDLDE:$LD_LIBRARY_PATH"
+    fi
+
+    export LD_LIBRARY_PATH
+    ;;
+
+    *)
+    if [ "$LD_LIBRARY_PATH" = "" ]; then
+        LD_LIBRARY_PATH="$BIN_DIR"
+    else
+        LD_LIBRARY_PATH="$BIN_DIR:$LD_LIBRARY_PATH"
+    fi
+    export LD_LIBRARY_PATH
+    ;;
+esac
+
+
+# Add the IDL bin directory to the path so that idlde will always find idl
+PATH=$IDL_DIR/bin:$PATH
+export PATH IDL_DIR 
+
+
+case $APPLICATION in
+    "idlhelp"|"ExelisVISHelp")
+        if [ "$*" ]; then
+           HELPQUERY="?$*"
+        fi
+        APPLICATION="online_help_html"
+        APP_ARGS="$IDL_DIR/help/online_help/help_CSH.htm$HELPQUERY"
+    ;;
+    "envihelp")
+        if [ $CLASSIC = 0 ]; then
+          if [ "$*" ]; then
+             HELPQUERY="?$*"
+          fi
+          APPLICATION="online_help_html"
+          APP_ARGS="$IDL_DIR/help/online_help/help_CSH.htm$HELPQUERY"
+        else
+          shift  # remove -classic argument
+          if [ "$*" ]; then
+           HELPQUERY="?$*"
+          fi
+          APPLICATION="online_help_html"
+          APP_ARGS="$ENVI_DIR/classic/help/ENVI3WHelp_CSH.htm$HELPQUERY"
+        fi
+    ;;
+esac
+
+if [ "$APPLICATION" = "ExelisVISHelp" ]; then
+   # Run it as a background process without waiting for it.
+   if [ "$UNAME" = "Darwin" ]; then
+      exec  $BIN_DIR/ExelisVISHelp.app/Contents/MacOS/ExelisVISHelp "${APP_ARGS_ARRAY[0]}" ${APP_ARGS_ARRAY[1]} ${APP_ARGS_ARRAY[2]}
+   fi
+fi
+
+if [ "$APPLICATION" = "online_help_html" ]; then
+   exec $IDL_DIR/bin/$APPLICATION $APP_ARGS &
+   exit 0
+fi
+
+if [ "$APPLICATION" = "idlde" ]; then
+  if [ "$CLASSPATH" = "" ]; then
+    CLASSPATH=".:$IDL_DIR/resource/bridges/export/java/javaidlb.jar"
+  else
+    CLASSPATH="$CLASSPATH:.:$IDL_DIR/resource/bridges/export/java/javaidlb.jar"
+  fi
+  export CLASSPATH
+
+  if [ "$OS" = "linux" ]; then
+    APP_ARGS="$APP_ARGS -outofprocess $XUL_ARGS"
+  fi
+
+  if [ "$OS" = "solaris2" ]; then
+    if [ "$XFILESEARCHPATH" = "" ]; then
+      XFILESEARCHPATH="$IDL_DIR/resource/X11/lib/app-defaults/Idl"
+    else
+      XFILESEARCHPATH="$XFILESEARCHPATH:$IDL_DIR/resource/X11/lib/app-defaults/Idl"
+    fi
+    export XFILESEARCHPATH
+  fi
+
+  if [ $UNAME = 'Darwin' ]; then
+    exec $IDL_DIR/idlde/idlde.darwin$IDLDE_ARCH.app/Contents/MacOS/idlde "$@" $APP_ARGS 2> /dev/null
+  else
+    JAVA_LOCATION="$IDL_DIR/idlde/bin.$OS$IDLDE_ARCH/jre/bin/java"
+    if [ -f $JAVA_LOCATION ]; then
+      exec $IDL_DIR/idlde/$APPLICATION.$OS$IDLDE_ARCH -vm $JAVA_LOCATION "$@" $APP_ARGS
+    else
+      exec $IDL_DIR/idlde/$APPLICATION.$OS$IDLDE_ARCH -vm java "$@" $APP_ARGS  
+    fi   
+  fi
+
+    # We shouldn't get here unless there was an error.
+    echo "$APPLICATION is not available for this system ($OS/$ARCH)"
+    exit 1
+fi
+
+if [ "$APPLICATION" = "envitaskengine" ]; then
+   APPLICATION="taskengine"
+   APP_ARGS="ENVI"
+fi
+
+if [ "$APPLICATION" = "idltaskengine" ]; then
+   APPLICATION="taskengine"
+   APP_ARGS="IDL"
+fi
+
+exec $BIN_DIR/$APPLICATION "$@" $APP_ARGS
+
+# We shouldn't get here unless there was an error.
+echo "$APPLICATION is not available for this system ($OS$ARCH)"
+exit 1

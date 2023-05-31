@@ -1,0 +1,52 @@
+#! /bin/sh
+#
+#	$Id: //depot/InDevelopment/integration/ENVI_product/release_eng/unix/install/doc_library#2 $
+#
+#  Shell script to strip documentation from IDL User's Library procedures.
+#
+# Usage:
+# doclibrary filter multiple f1 f2 ... ... fn
+#
+# it searches all of the files f1 .... fn for documentation templates.
+# when found, it strips the documentation and sends it to filter.
+#
+# multiple = 0 to only print one file, 1 to print as many as are found.
+#
+
+#set -x
+out=$1
+file=/tmp/idl_doc_lib_$$
+shift
+multi=$1
+shift
+rm -f $file
+while [ "$#" -ne 0 ]
+do
+	if [ -f "$1" ]
+	then
+		count=1
+#		echo "Documentation for " $1  > $file
+		sed "
+		1a\\
+----- Documentation for $1 -----
+		 /^;+/,/^;-/!d
+		 s/^;+//
+		 s/^;-//
+		 s/^;//
+		" "$1" >> $file
+		if [ "$multi" = 0 ]
+		then
+		  break
+		fi
+	fi
+	shift
+done
+
+if [ X"$count" = X ] 
+then
+	echo 'Doc_library: Unable to find file.'
+else
+	eval "$out < $file"
+	rm $file
+fi
+

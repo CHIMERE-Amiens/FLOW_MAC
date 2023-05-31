@@ -1,0 +1,13 @@
+#!/bin/sh
+
+# figure out canonical paths
+CUR_DIR="${0%/*}"
+IDL_DIR=`dirname $(cd -P "$CUR_DIR/../../../.." && pwd -P)` 
+BIN_DIR="$IDL_DIR/bin/bin.darwin.x86_64"
+
+TITLE="IDL Help"
+URL="file://$IDL_DIR/help/online_help/IDL/idl_CSH.html"
+PIPE=0 
+# run the actual app
+exec $BIN_DIR/ExelisVISHelp.app/Contents/MacOS/ExelisVISHelp "$TITLE" $URL $PIPE 
+
