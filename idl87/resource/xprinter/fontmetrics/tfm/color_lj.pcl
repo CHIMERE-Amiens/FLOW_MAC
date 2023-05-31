@@ -1,0 +1,113 @@
+*PCL: "5"
+*Product: "(HP Color LaserJet)"
+*ModelName: "HP Color LaserJet PCL Cartridge"
+*NickName: "HP Color LaserJet PCL Cartridge"
+
+%
+*UEL: "%-12345X"
+*EnterCommand: "@PJL ENTER LANGUAGE =PCL"
+*Reset: "E"
+
+*OpenUI *PImageableArea: PickOne
+*DefaultPImageableArea: Letter
+*PImageableArea Letter: "75 50 2400 3200 75 0"
+*PImageableArea Legal: "75 50 2400 4100 75 0"
+*PImageableArea Executive: "75 50 2025 3050 75 0"
+*PImageableArea A4: "71 50 2338 3407 71 0"
+*PImageableArea B5: "71 50 1936 2852 71 0"
+*PImageableArea Comm10: "75 50 1087 2750 75 0"
+*PImageableArea Monarch: "75 50 1012 2150 75 0"
+*PImageableArea C5: "71 50 1771 2604 71 0"
+*PImageableArea DL: "71 50 1157 2498 71 0"
+*CloseUI: *PImageableArea
+
+*OpenUI *LImageableArea: PickOne
+*DefaultLImageableArea: Letter
+*LImageableArea Letter: "60 50 3180 2450 60 0"
+*LImageableArea Legal: "60 50 4080 2450 60 0"
+*LImageableArea Executive: "60 50 3030 2075 60 0"
+*LImageableArea A4: "59 50 3389 2380 59 0"
+*LImageableArea B5: "59 50 2834 1978 59 0"
+*LImageableArea Comm10: "60 50 2730 1137 60 0"
+*LImageableArea Monarch: "60 50 2130 1062 60 0"
+*LImageableArea C5: "59 50 2586 1813 59 0"
+*LImageableArea DL: "59 50 2480 1199 59 0"
+*CloseUI: *LImageableArea
+
+*OpenUI *PageSize: PickOne
+*DefaultPageSize: Letter
+*PageSize Letter: "&l2A"
+*PageSize Legal: "&l3A"
+*PageSize Executive: "&l1A"
+*PageSize A4: "&l26A"
+*PageSize B5: "&l100A"
+*PageSize Comm10: "&l81A"
+*PageSize Monarch: "&l80A"
+*PageSize DL: "&l90A"
+*PageSize C5: "&l91A"
+*CloseUI: *PageSize 
+
+*DefaultResolution: 300dpi 
+
+*OpenUI *InputSlot: PickOne
+*DefaultInputSlot: Cassette
+*InputSlot Cassette: "&l1H"
+*InputSlot Lower: "&l5H"
+*InputSlot MP-Tray: "&l4H"
+*InputSlot Manual: "&l2H"
+*InputSlot Manual-Envelope: "&l3H"
+*InputSlot Envelope: "&l6H"
+*CloseUI: *InputSlot
+
+*% Font Information =====================
+*DefaultFont: 9NB17421.TFM
+*Font 9NB18467.TFM: Standard ROM
+*Font 9NB00041.TFM: Standard ROM
+*Font 9NB19169.TFM: Standard ROM
+*Font 9NB26500.TFM: Standard ROM
+*Font 9NB06334.TFM: Standard ROM
+*Font 9NB15724.TFM: Standard ROM
+*Font 9NB03902.TFM: Standard ROM
+*Font 9NB24464.TFM: Standard ROM
+*Font 9NB29358.TFM: Standard ROM
+*Font 9NB11478.TFM: Standard ROM
+*Font 9NB26962.TFM: Standard ROM
+*Font 9NB16827.TFM: Standard ROM
+*Font 9NB28145.TFM: Standard ROM
+*Font 9NB05705.TFM: Standard ROM
+*Font 9NB23281.TFM: Standard ROM
+*Font 9NB02995.TFM: Standard ROM
+*Font 9NB00491.TFM: Standard ROM
+*Font 9NB09961.TFM: Standard ROM
+*Font 9NB11942.TFM: Standard ROM
+*Font 9NB14604.TFM: Standard ROM
+*Font 9NB05436.TFM: Standard ROM
+*Font 9NB04827.TFM: Standard ROM
+*Font 9NB32391.TFM: Standard ROM
+*Font 9NB17421.TFM: Standard ROM
+*Font 9NB00292.TFM: Standard ROM
+*Font 9NB00153.TFM: Standard ROM
+*Font 9NB12382.TFM: Standard ROM
+*Font 9NB01869.TFM: Standard ROM
+*Font 9NB14771.TFM: Standard ROM
+*Font 9NB19718.TFM: Standard ROM
+*Font 9NB11538.TFM: Standard ROM
+*Font 9NB19895.TFM: Standard ROM
+*Font 9NB18716.TFM: Standard ROM
+*Font 9NB05447.TFM: Standard ROM
+*Font 9NB21726.TFM: Standard ROM
+*Font 9NB17035.TFM: Standard ROM
+*Font 9NB25667.TFM: Standard ROM
+*Font 9NB19912.TFM: Standard ROM
+*Font 9NB26299.TFM: Standard ROM
+*Font 9NB28703.TFM: Standard ROM
+*Font 9NB17673.TFM: Standard ROM
+*Font 9NB31322.TFM: Standard ROM
+*Font 9NB23811.TFM: Standard ROM
+*Font 9NB30333.TFM: Standard ROM
+*Font LPR0YE1A.TFM: Standard ROM
+
+*PCLEliminateEscapes: False
+*PCLColorMode: 2
+
+*% end of PD file for HP LaserJet IV
