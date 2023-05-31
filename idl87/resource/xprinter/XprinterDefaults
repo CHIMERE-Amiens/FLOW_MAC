@@ -1,0 +1,45 @@
+[windows]
+device=NULL,PostScript,FILE:
+
+[devices]
+HP LaserJet IV PCL Cartridge=hpiv PCL5,FILE:,local
+HP LaserJet IV PostScript Cartridge=hpiv PostScript,FILE:,local
+
+[ports]
+local=lp -t$XPDOCNAME
+
+[other-devices]
+Apple LaserWriter v23.0 PostScript=APPLE230 PostScript,FILE:
+Apple LaserWriter Plus v38.0 PostScript=APPLE380 PostScript,FILE:
+Apple LaserWriter Plus v42.2 PostScript=APPLE422 PostScript,FILE:
+Apple LaserWriter IIf v2010.113 PostScript=APLWIIf1 PostScript,FILE:
+Apple LaserWriter IIg v2010.113 PostScript=APLWIIg1 PostScript,FILE:
+Apple Personal LaserWriter NTR v2010.129 PostScript=APLWNTR1 PostScript,FILE:
+Apple LaserWriter II NTX-J v50.5 PostScript=AP_NTXJ1 PostScript,FILE:
+HP LaserJet IIISi PostScript v52.3 PostScript=HP3SI523 PostScript,FILE:
+
+[Xprinter,PostScript]
+Filename=xprinter.eps
+Scale=1.00
+Copies=1
+Orientation=Portrait
+PageSize=Letter
+DPI=300
+
+[Xprinter,PCL5]
+Filename=xprinter.pcl
+Scale=1.00
+Copies=1
+Orientation=Portrait
+PageSize=Letter
+DPI=300
+
+[Xprinter,PCL4]
+Filename=xprinter.pcl4
+Scale=1.00
+Copies=1
+Orientation=Portrait
+PageSize=Letter
+DPI=300
+
+

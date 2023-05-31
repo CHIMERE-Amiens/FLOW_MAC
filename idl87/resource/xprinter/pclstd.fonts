@@ -1,0 +1,119 @@
+
+#---------------------------------------------------------------------------
+#                        Resident Bitmap Fonts
+
+# LJII, LJIIP, LJIID, LJIII, LJIIISi
+CRR14E1A.TFM, -adobe-courier-medium-r-normal--42-100-300-300-m-25-iso8859-1
+CRR1CE1A.TFM, -adobe-courier-medium-r-normal--50-120-300-300-m-30-iso8859-1
+CRI14E1A.TFM, -adobe-courier-medium-o-normal--42-100-300-300-m-25-iso8859-1
+CRI1CE1A.TFM, -adobe-courier-medium-o-normal--50-120-300-300-m-30-iso8859-1
+CRB14E1A.TFM, -adobe-courier-bold-r-normal--42-100-300-300-m-25-iso8859-1
+CRB1CE1A.TFM, -adobe-courier-bold-r-normal--50-120-300-300-m-30-iso8859-1
+CRR14E1A.TFM, -agfa-courier-medium-r-normal--42-100-300-300-m-25-iso8859-1
+CRR1CE1A.TFM, -agfa-courier-medium-r-normal--50-120-300-300-m-30-iso8859-1
+CRI14E1A.TFM, -agfa-courier-medium-o-normal--42-100-300-300-m-25-iso8859-1
+CRI1CE1A.TFM, -agfa-courier-medium-o-normal--50-120-300-300-m-30-iso8859-1
+CRB14E1A.TFM, -agfa-courier-bold-r-normal--42-100-300-300-m-25-iso8859-1
+CRB1CE1A.TFM, -agfa-courier-bold-r-normal--50-120-300-300-m-30-iso8859-1
+
+# LJII, LJIIP, LJIII, LJIIISi, LJ4, LJ4ML
+LPR0YE1A.TFM, -hp-line printer-medium-r-normal--35-85-300-300-m-25-iso8859-1
+
+#---------------------------------------------------------------------------
+#                 Resident Intellifont Scalable Fonts
+
+# LJIII, LJIIISi
+TRR0000S.TFM, -adobe-times-medium-r-normal--%d-%d-%d-%d-p-0-iso8859-1
+TRI0000S.TFM, -adobe-times-medium-i-normal--%d-%d-%d-%d-p-0-iso8859-1
+TRB0000S.TFM, -adobe-times-bold-r-normal--%d-%d-%d-%d-p-0-iso8859-1
+TRJ0000S.TFM, -adobe-times-bold-i-normal--%d-%d-%d-%d-p-0-iso8859-1
+TRR0000S.TFM, -agfa-cg times-medium-r-normal--%d-%d-%d-%d-p-0-iso8859-1
+TRI0000S.TFM, -agfa-cg times-medium-i-normal--%d-%d-%d-%d-p-0-iso8859-1
+TRB0000S.TFM, -agfa-cg times-bold-r-normal--%d-%d-%d-%d-p-0-iso8859-1
+TRJ0000S.TFM, -agfa-cg times-bold-i-normal--%d-%d-%d-%d-p-0-iso8859-1
+UNR0000S.TFM, -agfa-univers-medium-r-normal--%d-%d-%d-%d-p-0-iso8859-1
+UNI0000S.TFM, -agfa-univers-medium-i-normal--%d-%d-%d-%d-p-0-iso8859-1
+UNB0000S.TFM, -agfa-univers-bold-r-normal--%d-%d-%d-%d-p-0-iso8859-1
+UNJ0000S.TFM, -agfa-univers-bold-i-normal--%d-%d-%d-%d-p-0-iso8859-1
+
+#
+# Laser Jet 4 series printer scalable fonts
+# Not every fonts listed here is available in every printer.
+# If you want to get a full list of fonts for certain printer, look at
+# the specific PPD file, or:
+# Use XpListFonts() to let Xprinter list fonts for you.
+# 
+9NB24464.TFM, -adobe-courier-medium-r-normal--%d-%d-%d-%d-p-0-iso8859-1
+9NB29358.TFM, -adobe-courier-medium-i-normal--%d-%d-%d-%d-p-0-iso8859-1
+9NB11478.TFM, -adobe-courier-bold-r-normal--%d-%d-%d-%d-p-0-iso8859-1
+9NB26962.TFM, -adobe-courier-bold-i-normal--%d-%d-%d-%d-p-0-iso8859-1
+9NB24464.TFM, -agfa-courier-medium-r-normal--%d-%d-%d-%d-p-0-iso8859-1
+9NB29358.TFM, -agfa-courier-medium-i-normal--%d-%d-%d-%d-p-0-iso8859-1
+9NB11478.TFM, -agfa-courier-bold-r-normal--%d-%d-%d-%d-p-0-iso8859-1
+9NB26962.TFM, -agfa-courier-bold-i-normal--%d-%d-%d-%d-p-0-iso8859-1
+9NB17421.TFM, -adobe-times-medium-r-normal--%d-%d-%d-%d-p-0-iso8859-1
+9NB00292.TFM, -adobe-times-medium-i-normal--%d-%d-%d-%d-p-0-iso8859-1
+9NB00153.TFM, -adobe-times-bold-r-normal--%d-%d-%d-%d-p-0-iso8859-1
+9NB12382.TFM, -adobe-times-bold-i-normal--%d-%d-%d-%d-p-0-iso8859-1
+9NB17421.TFM, -agfa-cg times-medium-r-normal--%d-%d-%d-%d-p-0-iso8859-1
+9NB00292.TFM, -agfa-cg times-medium-i-normal--%d-%d-%d-%d-p-0-iso8859-1
+9NB00153.TFM, -agfa-cg times-bold-r-normal--%d-%d-%d-%d-p-0-iso8859-1
+9NB12382.TFM, -agfa-cg times-bold-i-normal--%d-%d-%d-%d-p-0-iso8859-1
+9NB01869.TFM, -agfa-univers-medium-r-normal--%d-%d-%d-%d-p-0-iso8859-1
+9NB14771.TFM, -agfa-univers-medium-i-normal--%d-%d-%d-%d-p-0-iso8859-1
+9NB19718.TFM, -agfa-univers-bold-r-normal--%d-%d-%d-%d-p-0-iso8859-1
+9NB11538.TFM, -agfa-univers-bold-i-normal--%d-%d-%d-%d-p-0-iso8859-1
+
+##
+9NB18467.TFM, -agfa-albertus-medium-r-normal--%d-%d-%d-%d-p-0-iso8859-1
+9NB00041.TFM, -agfa-albertus-bold-r-normal--%d-%d-%d-%d-p-0-iso8859-1
+9NB19169.TFM, -agfa-antique olive-medium-r-normal--%d-%d-%d-%d-p-0-iso8859-1
+9NB26500.TFM, -agfa-antique olive-medium-i-normal--%d-%d-%d-%d-p-0-iso8859-1
+9NB06334.TFM, -agfa-antique olive-bold-r-normal--%d-%d-%d-%d-p-0-iso8859-1
+9NB15724.TFM, -agfa-clarendon condensed-medium-r-normal--%d-%d-%d-%d-p-0-iso8859-1
+9NB03902.TFM, -agfa-coronet-medium-r-normal--%d-%d-%d-%d-p-0-iso8859-1
+9NB16827.TFM, -agfa-garamond antiqua-medium-r-normal--%d-%d-%d-%d-p-0-iso8859-1
+9NB28145.TFM, -agfa-garamond kursiv-medium-r-normal--%d-%d-%d-%d-p-0-iso8859-1
+9NB05705.TFM, -agfa-garamond halbfett-medium-r-normal--%d-%d-%d-%d-p-0-iso8859-1
+9NB23281.TFM, -agfa-garamond kursiv halbfett-medium-r-normal--%d-%d-%d-%d-p-0-iso8859-1
+9NB02995.TFM, -agfa-letter gothic-medium-r-normal--%d-%d-%d-%d-p-0-iso8859-1
+9NB00491.TFM, -agfa-letter gothic-medium-i-normal--%d-%d-%d-%d-p-0-iso8859-1
+9NB09961.TFM, -agfa-letter gothic-bold-r-normal--%d-%d-%d-%d-p-0-iso8859-1
+9NB11942.TFM, -agfa-marigold-medium-r-normal--%d-%d-%d-%d-p-0-iso8859-1
+9NB14604.TFM, -agfa-omega-medium-r-normal--%d-%d-%d-%d-p-0-iso8859-1
+9NB05436.TFM, -agfa-omega-medium-i-normal--%d-%d-%d-%d-p-0-iso8859-1
+9NB04827.TFM, -agfa-omega-bold-r-normal--%d-%d-%d-%d-p-0-iso8859-1
+9NB32391.TFM, -agfa-omega-bold-i-normal--%d-%d-%d-%d-p-0-iso8859-1
+##
+9NB19895.TFM, -agfa-univers condensed-medium-r-normal--%d-%d-%d-%d-p-0-iso8859-1
+9NB18716.TFM, -agfa-univers condensed-medium-i-normal--%d-%d-%d-%d-p-0-iso8859-1
+9NB05447.TFM, -agfa-univers condensed-bold-r-normal--%d-%d-%d-%d-p-0-iso8859-1
+9NB21726.TFM, -agfa-univers condensed-bold-i-normal--%d-%d-%d-%d-p-0-iso8859-1
+##
+9NB17035.TFM, -agfa-arial-medium-r-normal--%d-%d-%d-%d-p-0-iso8859-1
+9NB25667.TFM, -agfa-arial-medium-i-normal--%d-%d-%d-%d-p-0-iso8859-1
+9NB19912.TFM, -agfa-arial-bold-r-normal--%d-%d-%d-%d-p-0-iso8859-1
+9NB26299.TFM, -agfa-arial-bold-i-normal--%d-%d-%d-%d-p-0-iso8859-1
+##
+9NB28703.TFM, -agfa-symbol-medium-r-normal--%d-%d-%d-%d-p-0-adobe-fontspecific
+##
+9NB17673.TFM, -agfa-times new roman-medium-r-normal--%d-%d-%d-%d-p-0-iso8859-1
+9NB31322.TFM, -agfa-times new roman-medium-i-normal--%d-%d-%d-%d-p-0-iso8859-1
+9NB23811.TFM, -agfa-times new roman-bold-r-normal--%d-%d-%d-%d-p-0-iso8859-1
+9NB30333.TFM, -agfa-times new roman-bold-i-normal--%d-%d-%d-%d-p-0-iso8859-1
+##
+9NB09894.TFM, -agfa-wingdings-medium-r-normal--%d-%d-%d-%d-p-0-iso8859-1
+
+#--------------------------- HP Plotter fonts ---------------------------
+# Font mappings used for HP plotter devices (hp650c, hp750c, hp755cm). 
+# There are no HP TFM files available for these plotter (stick) fonts, 
+# thus perfectly accurate font metric information cannot be made available.
+# Nevertheless, the font metric file mappings shown below do work fairly
+# accurately, particularly for alphanumeric text. The first three mappings
+# provide more accurate font metrics than the last two.
+#XPHPPLT0.TFM, -hp-fixed vector stick-medium-r-normal--35-85-300-300-m-25-iso8859-1
+XPHPPLT1.TFM, -hp-fixed vector stick-medium-r-normal--%d-%d-%d-%d-p-0-iso8859-1
+XPHPPLT2.TFM, -hp-fixed vector stick-bold-r-normal--%d-%d-%d-%d-p-0-iso8859-1
+XPHPPLT3.TFM, -hp-variable vector stick-medium-r-normal--%d-%d-%d-%d-p-0-iso8859-1
+XPHPPLT4.TFM, -hp-variable vector stick-bold-r-normal--%d-%d-%d-%d-p-0-iso8859-1
+
