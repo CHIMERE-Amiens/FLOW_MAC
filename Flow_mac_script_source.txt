@@ -1,0 +1,45 @@
+(*
+This script creates a "double-clickable" icon for a runtime IDL
+application defined by the idlApp variable. This script should be placed
+at the top level of a runtime application hierarchy. The 
+Utils_applescripts.scpt file must be in the same directory.
+*)
+
+(*
+Specify the path to the IDL SAVE file that launches the application, 
+relative to the location of the script
+*)
+
+set idlApp to "" as string
+
+(*
+Specify the path to the top directory of the IDL distribution, 
+relative to the location of the script.
+*)
+set idlDir to "idl87" as string
+
+tell application "Finder"
+  set myContainer to (container of (path to me)) as string
+  set IDLDirFolder to POSIX path of myContainer & idlDir & "/"
+  set IDLRunFolder to quoted form of (IDLDirFolder & "bin")
+  set ApplescriptUtilsFile to myContainer & "Utils_applescripts.scpt" as string
+end tell
+
+set myAppPath to POSIX path of myContainer & "/" & idlApp as string
+if idlApp is equal to "" then
+   set myAppPath to "" 
+end if
+
+set idlCmd to IDLDirFolder & "bin/idl -vm=" & myAppPath
+
+set ApplescriptUtils to load script file ApplescriptUtilsFile
+tell ApplescriptUtils
+  set XResult to LaunchX11()
+  EnvironmentSetup(IDLDirFolder)
+end tell
+
+if XResult is equal to 0 then
+  set theCommand to shellCmd & "'" & fullSetupCmd & "; " & DisplayCmd & "; cd  " & IDLRunFolder & "; " & idlCmd & "' > /dev/null  2>&1 & "
+  --display dialog theCommand
+  set results to do shell script theCommand
+end if
