@@ -1,0 +1,98 @@
+*PCL: "5"
+*Product: "(HP DesignJet 750C)"
+*ModelName: "HP DesignJet 750C HPGL-2/RTL"
+*NickName: "HP DesignJet 750C HPGL-2/RTL"
+
+%
+*UEL: "%-12345X"
+*EnterCommand: "@PJL ENTER LANGUAGE =HPGL2"
+*Reset: "E"
+
+*OpenUI *PImageableArea: PickOne
+*DefaultPImageableArea: Letter
+*PImageableArea Letter: "69 211 2412 2878 69 211"
+*PImageableArea Tabloid: "69 211 3182 4678 69 211"
+*PImageableArea ANSI-C: "69 211 4982 6178 69 211"
+*PImageableArea ANSI-D: "69 211 6482 9778 69 211"
+*PImageableArea ANSI-E: "69 211 10082 12778 69 211"
+*PImageableArea ARCH-C: "69 211 5282 6778 69 211"
+*PImageableArea ARCH-D: "69 211 7082 10378 69 211"
+*PImageableArea ARCH-30x42: "69 211 8882 12178 69 211"
+*PImageableArea ARCH-E: "69 211 10682 13978 69 211"
+*PImageableArea ISO-A0: "69 211 9815 13622 69 211"
+*PImageableArea ISO-A1: "69 211 6898 9511 69 211"
+*PImageableArea ISO-A2: "69 211 4843 6594 69 211"
+*PImageableArea ISO-A3: "69 211 3390 4539 69 211"
+*PImageableArea ISO-A4: "69 211 2362 3086 69 211"
+*CloseUI: *PImageableArea
+
+*OpenUI *LImageableArea: PickOne
+*DefaultLImageableArea: Letter
+*LImageableArea Letter: "211 69 2878 2412 211 69"
+*LImageableArea Tabloid: "211 69 4678 3182 211 69"
+*LImageableArea ANSI-C: "211 69 6178 4982 211 69"
+*LImageableArea ANSI-D: "211 69 9778 6482 211 69"
+*LImageableArea ANSI-E: "211 69 12778 10082 211 69"
+*LImageableArea ARCH-C: "211 69 6778 5282 211 69"
+*LImageableArea ARCH-D: "211 69 10378 7082 211 69"
+*LImageableArea ARCH-30x42: "211 69 12178 8882 211 69"
+*LImageableArea ARCH-E: "211 69 13978 10682 211 69"
+*LImageableArea ISO-A0: "211 69 13622 9815 211 69"
+*LImageableArea ISO-A1: "211 69 9511 6898 211 69"
+*LImageableArea ISO-A2: "211 69 6594 4843 211 69"
+*LImageableArea ISO-A3: "211 69 4539 3390 211 69"
+*LImageableArea ISO-A4: "211 69 3086 2362 211 69"
+*CloseUI: *LImageableArea
+
+*% On plotter devices page size is set
+*% using the HPGL-2 PS command, rather than a PCL
+*% escape sequence, so all of these
+*% fields are just empty strings.
+*OpenUI *PageSize: PickOne
+*DefaultPageSize: Letter
+*PageSize Letter: ""
+*PageSize Tabloid: ""
+*PageSize ANSI-C: ""
+*PageSize ANSI-D: ""
+*PageSize ANSI-E: ""
+*PageSize ARCH-C: ""
+*PageSize ARCH-D: ""
+*PageSize ARCH-30x42: ""
+*PageSize ARCH-E: ""
+*PageSize ISO-A0: ""
+*PageSize ISO-A1: ""
+*PageSize ISO-A2: ""
+*PageSize ISO-A3: ""
+*PageSize ISO-A4: ""
+*CloseUI: *PageSize 
+ 
+*DefaultResolution: 300dpi 
+
+*% Custom Page Sizes; Note Units are === 
+*% points (1/72 inch), not dots ========
+*MaxMediaWidth: "2599"
+*ParamCustomPageSize Width: 288 2599
+*ParamCustomPageSize Height: 288 129600
+*ParamCustomPageSize WidthOffset: 0 2599
+*ParamCustomPageSize HeightOffset: 0 129600
+
+*OpenUI *InputSlot: PickOne
+*DefaultInputSlot: OnlyOne 
+*InputSlot OnlyOne: ""
+*CloseUI: *InputSlot
+
+*% Font Information =====================
+*DefaultFont: XPHPPLT1.TFM
+*Font XPHPPLT0.TFM: Standard ROM
+*Font XPHPPLT1.TFM: Standard ROM
+*Font XPHPPLT2.TFM: Standard ROM
+*Font XPHPPLT3.TFM: Standard ROM
+*Font XPHPPLT4.TFM: Standard ROM
+
+*PCLEliminateEscapes: False
+*PCLColorMode: 1
+*DeviceIsPlotter: 1
+*RasterOnlySizeThreshold: 0
+*RasterOnlyDPI: 150
+
+*% end of PD file for HP DesignJet 750C

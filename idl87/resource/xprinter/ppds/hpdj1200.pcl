@@ -1,0 +1,85 @@
+%
+% It now supports color!
+%
+*PCL: "5"
+*Product: "(HP DeskJet 1200C)"
+*ModelName: "HP DeskJet 1200C PCL"
+*NickName: "HP DeskJet 1200C PCL"
+
+%
+*EnterCommand: "@PJL ENTER LANGUAGE =PCL"
+*Reset: "E"
+
+*OpenUI *PImageableArea: PickOne
+*DefaultPImageableArea: Letter
+*PImageableArea Letter: "75 50 2400 3200 75 0"
+*PImageableArea Legal: "75 50 2400 4100 75 0"
+*PImageableArea A4: "71 50 2338 3407 71 0"
+*PImageableArea C5: "71 50 1771 2604 71 0"
+*PImageableArea DL: "71 50 1157 2498 71 0"
+*CloseUI: *PImageableArea
+
+*OpenUI *LImageableArea: PickOne
+*DefaultLImageableArea: Letter
+*LImageableArea Letter: "60 50 3180 2450 60 0"
+*LImageableArea Legal: "60 50 4080 2450 60 0"
+*LImageableArea A4: "59 50 3389 2380 59 0"
+*LImageableArea C5: "59 50 2586 1813 59 0"
+*LImageableArea DL: "59 50 2480 1199 59 0"
+*CloseUI: *LImageableArea
+
+*OpenUI *PageSize: PickOne
+*DefaultPageSize: Letter
+*PageSize Letter: "&l2A"
+*PageSize Legal: "&l3A"
+*PageSize A4: "&l26A"
+*PageSize DL: "&190A"
+*PageSize C5: "&191A"
+*CloseUI: *PageSize 
+
+*DefaultResolution: 300dpi
+
+*OpenUI *InputSlot: PickOne
+*DefaultInputSlot: Tray
+*InputSlot Tray: "&l1H"
+*InputSlot Manual: "&l2H"
+*CloseUI: *InputSlot
+
+*% Font Information =====================
+*DefaultFont: 9NB17421.TFM
+*Font LPR0YE1A.TFM: Standard ROM
+*Font LPR0YLGA.TFM: Standard ROM
+*Font LPR0YPCA.TFM: Standard ROM
+*Font LPR0YPDA.TFM: Standard ROM
+*Font LPR0YPMA.TFM: Standard ROM
+*Font 9NB00042.TFM: Standard ROM
+*Font 9NB00050.TFM: Standard ROM
+*Font 9NB00153.TFM: Standard ROM
+*Font 9NB00292.TFM: Standard ROM
+*Font 9NB00491.TFM: Standard ROM
+*Font 9NB01869.TFM: Standard ROM
+*Font 9NB02995.TFM: Standard ROM
+*Font 9NB03903.TFM: Standard ROM
+*Font 9NB05448.TFM: Standard ROM
+*Font 9NB06335.TFM: Standard ROM
+*Font 9NB09961.TFM: Standard ROM
+*Font 9NB11478.TFM: Standard ROM
+*Font 9NB11538.TFM: Standard ROM
+*Font 9NB12382.TFM: Standard ROM
+*Font 9NB14771.TFM: Standard ROM
+*Font 9NB17421.TFM: Standard ROM
+*Font 9NB18468.TFM: Standard ROM
+*Font 9NB18717.TFM: Standard ROM
+*Font 9NB19170.TFM: Standard ROM
+*Font 9NB19718.TFM: Standard ROM
+*Font 9NB19896.TFM: Standard ROM
+*Font 9NB21727.TFM: Standard ROM
+*Font 9NB24464.TFM: Standard ROM
+*Font 9NB26501.TFM: Standard ROM
+*Font 9NB26962.TFM: Standard ROM
+*Font 9NB29358.TFM: Standard ROM
+
+*PCLEliminateEscapes: False
+*PCLColorMode: 1
+
+*% end of PD file for HP PaintJet XL300

@@ -1,0 +1,115 @@
+*PCL: "5"
+*Product: "(HP LaserJet IIID)"
+*ModelName: "HP LaserJet IIID PCL Cartridge"
+*NickName: "HP LaserJet IIID PCL Cartridge"
+
+%
+*Reset: "E"
+
+*OpenUI *PImageableArea: PickOne
+*DefaultPImageableArea: Letter
+*PImageableArea Letter: "75 50 2400 3200 75 0"
+*PImageableArea Legal: "75 50 2400 4100 75 0"
+*PImageableArea Executive: "75 50 2025 3050 75 0"
+*PImageableArea A4: "71 50 2338 3407 71 0"
+*PImageableArea Comm10: "75 50 1087 2750 75 0"
+*PImageableArea Monarch: "75 50 1012 2150 75 0"
+*PImageableArea C5: "71 50 1771 2604 71 0"
+*PImageableArea DL: "71 50 1157 2498 71 0"
+*CloseUI: *PImageableArea
+
+*OpenUI *LImageableArea: PickOne
+*DefaultLImageableArea: Letter
+*LImageableArea Letter: "60 50 3180 2450 60 0"
+*LImageableArea Legal: "60 50 4080 2450 60 0"
+*LImageableArea Executive: "60 50 3030 2075 60 0"
+*LImageableArea A4: "59 50 3389 2380 59 0"
+*LImageableArea Comm10: "60 50 2730 1137 60 0"
+*LImageableArea Monarch: "60 50 2130 1062 60 0"
+*LImageableArea C5: "59 50 2586 1813 59 0"
+*LImageableArea DL: "59 50 2480 1199 59 0"
+*CloseUI: *LImageableArea
+
+*OpenUI *PageSize: PickOne
+*DefaultPageSize: Letter
+*PageSize Letter: "&l2A"
+*PageSize Legal: "&l3A"
+*PageSize Executive: "&l1A"
+*PageSize A4: "&l26A"
+*PageSize Comm10: "&l81A"
+*PageSize Monarch: "&l80A"
+*PageSize DL: "&l90A"
+*PageSize C5: "&l91A"
+*CloseUI: *PageSize 
+
+*DefaultResolution: 300dpi
+
+*OpenUI *InputSlot: PickOne
+*DefaultInputSlot: Upper
+*InputSlot Upper: "&l1H"
+*InputSlot Lower: "&l4H"
+*InputSlot Envelope: "&l6H"
+*InputSlot Manual: "&2H"
+*InputSlot Manual-Envelope: "&3H"
+*CloseUI: *InputSlot
+
+*% Font Information =====================
+*DefaultFont: CRR14E1A.TFM
+*Font CRB14E1A.TFM: Standard ROM
+*Font CRB14LGA.TFM: Standard ROM
+*Font CRB14PCA.TFM: Standard ROM
+*Font CRB14PDA.TFM: Standard ROM
+*Font CRB14PMA.TFM: Standard ROM
+*Font CRB14R8A.TFM: Standard ROM
+*Font CRB1CE1A.TFM: Standard ROM
+*Font CRB1CLGA.TFM: Standard ROM
+*Font CRB1CPCA.TFM: Standard ROM
+*Font CRB1CPDA.TFM: Standard ROM
+*Font CRB1CPMA.TFM: Standard ROM
+*Font CRB1CR8A.TFM: Standard ROM
+*Font CRI14E1A.TFM: Standard ROM
+*Font CRI14LGA.TFM: Standard ROM
+*Font CRI14PCA.TFM: Standard ROM
+*Font CRI14PDA.TFM: Standard ROM
+*Font CRI14PMA.TFM: Standard ROM
+*Font CRI14R8A.TFM: Standard ROM
+*Font CRI1CE1A.TFM: Standard ROM
+*Font CRI1CLGA.TFM: Standard ROM
+*Font CRI1CPCA.TFM: Standard ROM
+*Font CRI1CPDA.TFM: Standard ROM
+*Font CRI1CPMA.TFM: Standard ROM
+*Font CRI1CR8A.TFM: Standard ROM
+*Font CRR14E1A.TFM: Standard ROM
+*Font CRR14LGA.TFM: Standard ROM
+*Font CRR14PCA.TFM: Standard ROM
+*Font CRR14PDA.TFM: Standard ROM
+*Font CRR14PMA.TFM: Standard ROM
+*Font CRR14R8A.TFM: Standard ROM
+*Font CRR1CE1A.TFM: Standard ROM
+*Font CRR1CLGA.TFM: Standard ROM
+*Font CRR1CPCA.TFM: Standard ROM
+*Font CRR1CPDA.TFM: Standard ROM
+*Font CRR1CPMA.TFM: Standard ROM
+*Font CRR1CR8A.TFM: Standard ROM
+*Font LPR0YE1A.TFM: Standard ROM
+*Font LPR0YLGA.TFM: Standard ROM
+*Font LPR0YPCA.TFM: Standard ROM
+*Font LPR0YPDA.TFM: Standard ROM
+*Font LPR0YPMA.TFM: Standard ROM
+*Font LPR0YR8A.TFM: Standard ROM
+*Font TRB0000S.TFM: Standard ROM
+*Font TRI0000S.TFM: Standard ROM
+*Font TRJ0000S.TFM: Standard ROM
+*Font TRR0000S.TFM: Standard ROM
+*Font UNB0000S.TFM: Standard ROM
+*Font UNI0000S.TFM: Standard ROM
+*Font UNJ0000S.TFM: Standard ROM
+*Font UNR0000S.TFM: Standard ROM
+*Font UNA0000S.TFM: Standard ROM
+*Font UNC0000S.TFM: Standard ROM
+*Font UNF0000S.TFM: Standard ROM
+*Font UNH0000S.TFM: Standard ROM
+
+*PCLEliminateEscapes: False
+
+*% end of PD file for HP LaserJet IIID

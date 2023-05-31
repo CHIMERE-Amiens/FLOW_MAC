@@ -1,0 +1,128 @@
+*PCL: "5"
+*Product: "(Lexmark Optra LaserPrinter)"
+*ModelName: "Lexmark Optra LaserPrinter PCL"
+*NickName: "Lexmark Optra PS"
+
+%
+*UEL: "%-12345X"
+*EnterCommand: "@PJL ENTER LANGUAGE=PCL"
+*Reset: "E"
+
+*OpenUI *PImageableArea: PickOne
+*DefaultPImageableArea: Letter
+*PImageableArea Letter: "75 50 2400 3200 75 0"
+*PImageableArea Legal: "75 50 2400 4100 75 0"
+*PImageableArea Executive: "75 50 2175 3150 75 0"
+*PImageableArea A4: "71 40 2480 3507 71 0"
+*PImageableArea A5: "75 50 1748 2480 75 0"
+*PImageableArea B5: "75 50 2150 3035 75 0"
+*PImageableArea Comm10: "75 50 1237 2850 75 0"
+*PImageableArea Monarch: "75 50 1162 2250 75 0"
+*PImageableArea C5: "71 50 1913 2704 71 0"
+*PImageableArea C9: "75 50 1162 2662 75 0"
+*PImageableArea DL: "71 50 2078 2598 71 0"
+*PImageableArea ISOB5: "71 50 2078 2952 71 0"
+*PImageableArea Other: "75 50 2550 4200 75 0"
+*CloseUI: *PImageableArea
+
+*OpenUI *LImageableArea: PickOne
+*DefaultLImageableArea: Letter
+*LImageableArea Letter: "60 50 2400 3200 60 0"
+*LImageableArea Legal: "60 50 2400 4100 60 0"
+*LImageableArea Executive: "60 50 2175 3150 60 0"
+*LImageableArea A4: "59 40 2480 3507 59 0"
+*LImageableArea A5: "60 50 1748 2480 60 0"
+*LImageableArea B5: "60 50 2150 3035 60 0"
+*LImageableArea Comm10: "60 50 1237 2850 60 0"
+*LImageableArea Monarch: "60 50 1162 2250 60 0"
+*LImageableArea C5: "59 50 1913 2704 59 0"
+*LImageableArea C9: "60 50 1162 2662 60 0"
+*LImageableArea DL: "59 50 1299 2598 59 0"
+*LImageableArea ISOB5: "59 50 2078 2952 59 0"
+*LImageableArea Other: "60 50 2550 4200 60 0"
+*CloseUI: *LImageableArea
+
+*OpenUI *PageSize: PickOne
+*DefaultPageSize: Letter
+*PageSize Letter: "&l2A"
+*PageSize Legal: "&l3A"
+*PageSize Executive: "&l1A"
+*PageSize B5: "&l12A"
+*PageSize A5: "&l13A"
+*PageSize A4: "&l26A"
+*PageSize Comm10: "&l81A"
+*PageSize C9: "&l89A"
+*PageSize Monarch: "&l80A"
+*PageSize DL: "&l90A"
+*PageSize C5: "&l91A"
+*PageSize ISOB5: "&l99A"
+*PageSize Other: "&l600A"
+*CloseUI: *PageSize 
+
+*OpenUI *Resolution: PickOne
+*DefaultResolution: 300dpi
+*Resolution 300dpi: "@PJL SET RESOLUTION = 300"
+*Resolution 600dpi: "@PJL SET RESOLUTION = 600"
+*Resolution 1200dpi: "@PJL SET RESOLUTION = 1200"
+*CloseUI: *Resolution
+
+*OpenUI *InputSlot: PickOne
+*DefaultInputSlot: Upper
+*InputSlot Upper: "&l1H"
+*InputSlot Lower: "&l4H"
+*InputSlot Envelope: "&l6H"
+*InputSlot Manual: "&l2H"
+*InputSlot Manual_Envelop: "&l3H"
+*CloseUI: *InputSlot
+
+*% Font Information =====================
+*DefaultFont: 9NB17421.TFM
+*Font 9NB18467.TFM: Standard ROM
+*Font 9NB00041.TFM: Standard ROM
+*Font 9NB19169.TFM: Standard ROM
+*Font 9NB26500.TFM: Standard ROM
+*Font 9NB06334.TFM: Standard ROM
+*Font 9NB15724.TFM: Standard ROM
+*Font 9NB03902.TFM: Standard ROM
+*Font 9NB24464.TFM: Standard ROM
+*Font 9NB29358.TFM: Standard ROM
+*Font 9NB11478.TFM: Standard ROM
+*Font 9NB26962.TFM: Standard ROM
+*Font 9NB16827.TFM: Standard ROM
+*Font 9NB28145.TFM: Standard ROM
+*Font 9NB05705.TFM: Standard ROM
+*Font 9NB23281.TFM: Standard ROM
+*Font 9NB02995.TFM: Standard ROM
+*Font 9NB00491.TFM: Standard ROM
+*Font 9NB09961.TFM: Standard ROM
+*Font 9NB11942.TFM: Standard ROM
+*Font 9NB14604.TFM: Standard ROM
+*Font 9NB05436.TFM: Standard ROM
+*Font 9NB04827.TFM: Standard ROM
+*Font 9NB32391.TFM: Standard ROM
+*Font 9NB17421.TFM: Standard ROM
+*Font 9NB00292.TFM: Standard ROM
+*Font 9NB00153.TFM: Standard ROM
+*Font 9NB12382.TFM: Standard ROM
+*Font 9NB01869.TFM: Standard ROM
+*Font 9NB14771.TFM: Standard ROM
+*Font 9NB19718.TFM: Standard ROM
+*Font 9NB11538.TFM: Standard ROM
+*Font 9NB19895.TFM: Standard ROM
+*Font 9NB18716.TFM: Standard ROM
+*Font 9NB05447.TFM: Standard ROM
+*Font 9NB21726.TFM: Standard ROM
+*Font 9NB17035.TFM: Standard ROM
+*Font 9NB25667.TFM: Standard ROM
+*Font 9NB19912.TFM: Standard ROM
+*Font 9NB26299.TFM: Standard ROM
+*Font 9NB28703.TFM: Standard ROM
+*Font 9NB17673.TFM: Standard ROM
+*Font 9NB31322.TFM: Standard ROM
+*Font 9NB23811.TFM: Standard ROM
+*Font 9NB30333.TFM: Standard ROM
+*Font LPR0YE1A.TFM: Standard ROM
+
+*PCLEliminateEscapes: False 
+
+*% end of PD file for LEXMARK Lx
